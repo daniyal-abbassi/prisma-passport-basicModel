@@ -1,5 +1,7 @@
 const {Pool} = require('pg')
 
+
+
 const pool = new Pool({
     connectionString: 'postgresql://lain:123@localhost:5432/test',
     ssl: {
@@ -21,8 +23,16 @@ const File = {
         return results.rows;
         
     } catch (error) {
-        console.error('ERROR IN READING FILES',error)
-        throw error
+        console.error('ERROR IN READING FILES',error);
+        throw error;
+    }
+   },
+   saveFile: async(fileName,type,data)=>{
+    try {
+        await pool.query('INSERT INTO files(filename,type,data) VALUES($1,$2,$3)',[fileName,type,data])
+    } catch (error) {
+        console.error('ERROR IN READING FILES',error);
+        throw error;
     }
    }
 }
