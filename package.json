@@ -1,0 +1,20 @@
+{
+  "name": "prisma-passport-learning",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniyal-abbassi/prisma-passport-basicModel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniyal-abbassi/prisma-passport-basicModel/issues"
+  },
+  "homepage": "https://github.com/daniyal-abbassi/prisma-passport-basicModel#readme",
+  "description": ""
+}
