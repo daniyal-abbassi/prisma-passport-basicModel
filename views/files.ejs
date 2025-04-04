@@ -1,5 +1,18 @@
 <h2>Uploaded Files List</h2>
 
 <ul>
-    
+    <%if(files) {%>
+        <%files.forEach(file=>{%>
+            <li>
+                <p>name: </p> <h5><%=file.filename%></h5>
+                <p>size: </p> <h5><%=file.size%></h5>
+                <p>type: </p> <h5><%=file.type%></h5>
+                <p>date: </p> <small><%=file.created_at%></small>
+            </li>
+        <%})%>
+    <%} else {%>
+        <h3>No files yet!!!</h3>
+    <%}%>
 </ul>
+
+<button><a href="/upload">UPLOAD NEW FILE HERE</a></button>

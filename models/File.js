@@ -7,7 +7,8 @@ const File = {
     //show all files
     showFiles: async()=>{
      try {
-         const results = await pool.query('SELECT * FROM files');
+         const results = await pool.query('SELECT filename,created_at,type,size FROM files');
+         console.log('showing files model,  results.rows: ',results.rows)
          return results.rows;
          
      } catch (error) {
