@@ -14,8 +14,8 @@ const uploadController = {
     //router post request controller
     uploadPost: async(req,res)=>{
         try {
-            const {originalname,mimetype,buffer} = req.file;
-            await File.saveFile(originalname,mimetype,buffer);
+            const {originalname,mimetype,buffer,size} = req.file;
+            await File.saveFile(originalname,mimetype,buffer,size);
         } catch (error) {
             console.error('ERROR IN UPLOAD CONTROLLER: ',error)
             res.status(500).send('ERROR SAVING FILE, SERVER ERROR: ',error)
