@@ -1,0 +1,28 @@
+// uploadRouter controller file
+const File = require('../models/File');
+
+const uploadController = {
+    //router get request controller
+    uploadGet: async (req,res)=>{
+        try {
+            res.render('form')
+        } catch (error) {
+            console.error('ERROR IN UPLOAD CONTROLLER: ',error)
+            res.status(500).send('ERROR GETTING FILES, SERVER ERROR: ',error)
+        }
+    },
+    //router post request controller
+    uploadPost: async(req,res)=>{
+        try {
+            const {originalname,mimetype,buffer} = req.file;
+            await File.saveFile(originalname,mimetype,buffer);
+        } catch (error) {
+            console.error('ERROR IN UPLOAD CONTROLLER: ',error)
+            res.status(500).send('ERROR SAVING FILE, SERVER ERROR: ',error)
+            
+        }
+    },
+}
+
+
+module.exports=uploadController;
