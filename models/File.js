@@ -16,9 +16,9 @@ const File = {
      }
     },
     //insert to database(file)
-    saveFile: async(fileName,type,data)=>{
+    saveFile: async(fileName,type,data,size)=>{
      try {
-         await pool.query('INSERT INTO files(filename,type,data) VALUES($1,$2,$3)',[fileName,type,data])
+         await pool.query('INSERT INTO files(filename,type,data,size) VALUES($1,$2,$3,$4)',[fileName,type,data,size])
      } catch (error) {
          console.error('ERROR IN READING FILES',error);
          throw error;
