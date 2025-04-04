@@ -16,8 +16,7 @@ const uploadController = {
         try {
             const {originalname,mimetype,buffer,size} = req.file;
             await File.saveFile(originalname,mimetype,buffer,size);
-            const files = await File.showFiles();
-            res.render('files',{files})
+            res.redirect('/files');
         } catch (error) {
             console.error('ERROR IN UPLOAD CONTROLLER: ',error)
             res.status(500).send('ERROR SAVING FILE, SERVER ERROR: ',error)
