@@ -6,7 +6,9 @@ const uploadController = {
     //router get request controller
     uploadGet: async (req,res)=>{
         try {
-            res.render('form')
+            //get folderId from query
+            const folderId = req.query.folderId || null;
+            res.render('form',{folderId: folderId})
         } catch (error) {
             console.error('ERROR IN UPLOAD CONTROLLER: ',error)
             res.status(500).send('ERROR GETTING FILES, SERVER ERROR: ',error)
@@ -15,6 +17,8 @@ const uploadController = {
     //router post request controller
     uploadPost: async(req,res)=>{
         try {
+            //get folderId
+            const folderId = req.query.folderId || null;
             //upload to cloudinary
             const result = await cloudinary.uploader.upload_stream(
                 //let cloudinary figure out the type of file
@@ -30,8 +34,8 @@ const uploadController = {
                     //get the url
                     const fileUrl = result.secure_url;
                     //save to database
-                    await File.saveFile(req.body.name,fileUrl,format,created_at,bytes)
-                    res.redirect('/files')
+                    await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId)
+                    res.redirect(`/folders/${folderId}`)
                 }
             ).end(req.file.buffer)
         } catch (error) {
