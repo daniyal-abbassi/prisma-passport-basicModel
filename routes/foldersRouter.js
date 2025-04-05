@@ -66,10 +66,23 @@ folderRouter.post('/folders',async(req,res)=>{
         }
         
     } catch (error) {
-        console.error('Error fetching folder contents:', error);
-        res.status(500).send('Error fetching folder contents');
+        console.error('Error creating folder:', error);
+        res.status(500).send('Error creating folder');
     
     }
 })
 
+folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
+    try {
+        const {name} = req.body;
+        const folderId = req.params.folderId;
+        console.log('this is name: ',name,'  and this is id: ',folderId)
+        await File.editFolderNameById(name,folderId);
+        res.redirect(`/folders/${folderId}`);
+    } catch (error) {
+        console.error('Error editing folder:', error);
+        res.status(500).send('Error editing folder');
+        
+    }
+})
 module.exports = folderRouter;

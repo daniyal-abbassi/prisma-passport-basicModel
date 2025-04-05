@@ -1,7 +1,7 @@
 <h1>file explorer</h1>
 
 <div class="breadcrumb">
-    Current Path: <a href="/">Root</a>
+    Current Path: <a href="/folders">Root</a>
     <% if(currentPath && currentPath.length>0) {%>
         <%currentPath.forEach(path=>{%>
             <%if(path.id !== null) {%>
@@ -23,8 +23,9 @@
         <%folders.forEach(folder=>{%>
             <li class="folder-item">
                 <span class="item-name"><%=folder.name%></span>
-                <div class="item-btns">
+                <div class="item-buttons">
                     <button onclick="openFolder(<%=folder.folder_id%>)">Open</button>
+                    <button onclick="editFolder(<%=folder.folder_id%>, '<%=folder.name%>')">Edit</button>
                 </div>
             </li>
         <%})%>
@@ -61,5 +62,26 @@
     function openFolder(folderId) {
         window.location.href=`/folders/${folderId}`;
         console.log('clicked')
+    }
+    // edit folder function
+    function editFolder(folderId,currentName) {
+        const newName = prompt('Enter new name: ',currentName);
+        if(newName&&newName!==currentName) {
+            fetch(`/folders/${folderId}/edit`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `name=${encodeURIComponent(newName)}`,
+            })
+            .then(response=>{
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Failed to edit folder: ',response)
+                    alert('Failed to edit folder.')
+                }
+            });
+        }
     }
 </script>

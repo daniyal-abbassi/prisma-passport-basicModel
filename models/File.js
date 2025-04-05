@@ -65,6 +65,14 @@ const File = {
             console.error('ERROR CREATING FOLDERS', error);
             throw error
         }
+    },
+    editFolderNameById: async(newName,folderId) => {
+        try {
+            await pool.query('UPDATE folders SET name=$1 WHERE folder_id=$2', [newName, folderId]);
+        } catch (error) {
+            console.error('ERROR EDIT FOLDER', error);
+            throw error
+        }
     }
 }
 
