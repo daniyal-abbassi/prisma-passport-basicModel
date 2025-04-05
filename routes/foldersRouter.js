@@ -85,4 +85,14 @@ folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
         
     }
 })
+// delete folder router
+folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
+    try {
+        const {folderId} = req.params;
+        await File.deleteFolder(folderId)
+    } catch (error) {
+        console.error('Error deleting folder:', error);
+        res.status(500).send('Error deleting folder');
+    }
+})
 module.exports = folderRouter;
