@@ -73,6 +73,14 @@ const File = {
             console.error('ERROR EDIT FOLDER', error);
             throw error
         }
+    },
+    deleteFolder: async(folderId)=>{
+        try {
+            await pool.query('DELETE FROM folders WHERE folder_id=$1', [folderId]);
+        } catch (error) {
+            console.error('ERROR DELETE FOLDER', error);
+            throw error
+        }
     }
 }
 
