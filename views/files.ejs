@@ -1,0 +1,43 @@
+<h1>file explorer</h1>
+
+<div class="breadcrumb">
+    Current Path: <a href="/">Root</a>
+    <% if(currentPath && currentPath.length>0) {%>
+        <%currentPath.forEach(path=>{%>
+            <%if(path.id !== null) {%>
+                <span>&gt;</span>
+                <a href="/folders/<%=path.id%>"><%=path.name%></a>
+            <%}%>
+        <%})%>
+    <%}%>
+</div>
+
+<div>
+    <button id="createFolderBtn">Create Folder</button>
+</div>
+
+
+<script>
+    document.getElementById("createFolderBtn").addEventListener('click',()=>{
+        const folderName = prompt('Enter name Please');
+        if(folderName){
+            //get parent id, it can be null
+            const parentId = '<%=currentFolderId%>';
+            fetch('/folders',{
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded',
+                },
+                body: `name=${encodeURIComponent(folderName)}&parentId=${encodeURIComponent(parentId)}`
+            })
+            .then(response=>{
+                if(response.ok) {
+                    window.location.reload()
+                } else {
+                    console.error('Failed to create folder: ',response)
+                    alert('Fail to create folder.');
+                }
+            }) //then
+        } // if 
+    })
+</script>

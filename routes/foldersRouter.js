@@ -56,5 +56,20 @@ folderRouter.get('/folders/:folderId', async (req, res) => {
     }
 })
 
+folderRouter.post('/folders',async(req,res)=>{
+    try {
+        let {name,parentId} = req.body;
+        if(!parentId) {
+            await File.createFolder(name,null)
+        } else {
+            await File.createFolder(name,parentId)
+        }
+        
+    } catch (error) {
+        console.error('Error fetching folder contents:', error);
+        res.status(500).send('Error fetching folder contents');
+    
+    }
+})
 
 module.exports = folderRouter;

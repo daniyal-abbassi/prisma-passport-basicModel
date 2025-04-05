@@ -57,6 +57,14 @@ const File = {
             console.error('ERROR SHOWING FOLDERS', error);
             throw error
         }
+    },
+    createFolder: async (name, parentId) => {
+        try {
+            await pool.query('INSERT INTO folders(name,parent_id) VALUES($1,$2)', [name, parentId]);
+        } catch (error) {
+            console.error('ERROR CREATING FOLDERS', error);
+            throw error
+        }
     }
 }
 
