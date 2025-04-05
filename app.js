@@ -5,7 +5,7 @@ require('dotenv').config();
 //router files
 const uploadRouter= require('./routes/uploadRouter');
 const allFilesRouter = require('./routes/allFilesRouter');
-
+const folderRouter = require('./routes/foldersRouter');
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({ 
     cloud_name: 'dajzulqra', 
@@ -20,7 +20,7 @@ app.set('view engine','ejs');
 
 app.use('/files',allFilesRouter)
 app.use('/upload',uploadRouter)
-
+app.use('/',folderRouter)
 
 
 app.listen(3000,()=>console.log('app is runnig on port: ',3000))
