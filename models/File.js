@@ -1,25 +1,14 @@
 // database model queries file
 const pool = require('../db/pool');
-
+const Cloudinary = require('../config/coudinary');
 // query object: File
 
 const File = {
-    //show all files
-    showFiles: async()=>{
-     try {
-         const results = await pool.query('SELECT filename,created_at,type,size FROM files');
-         console.log('showing files model,  results.rows: ',results.rows)
-         return results.rows;
-         
-     } catch (error) {
-         console.error('ERROR IN READING FILES',error);
-         throw error;
-     }
-    },
+    
     //insert to database(file)
-    saveFile: async(fileName,type,data,size)=>{
+    saveFile: async(filename,url)=>{
      try {
-         await pool.query('INSERT INTO files(filename,type,data,size) VALUES($1,$2,$3,$4)',[fileName,type,data,size])
+         await pool.query('INSERT INTO files(filename,url) VALUES($1,$2)',[filename,url]);
      } catch (error) {
          console.error('ERROR IN READING FILES',error);
          throw error;
