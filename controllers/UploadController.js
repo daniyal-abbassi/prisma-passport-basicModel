@@ -15,16 +15,23 @@ const uploadController = {
     //router post request controller
     uploadPost: async(req,res)=>{
         try {
+            //upload to cloudinary
             const result = await cloudinary.uploader.upload_stream(
-                {resource_type: "auto"},async(error,result)=>{
+                //let cloudinary figure out the type of file
+                {resource_type: "auto"},
+                //callback function
+                async(error,result)=>{
                     if(error) {
                         return res.status(500).send("Cloudinary upload failed.");
                     }
-                    console.log('this is result: ',result)
+                    //get size and type,etc...
+                    const {format,created_at,bytes} = result;
+                    
+                    //get the url
                     const fileUrl = result.secure_url;
-                    //save to database here
-                    await File.saveFile(req.body.name,fileUrl)
-                    res.send({message: 'file uploaded successfully ',url: fileUrl})
+                    //save to database
+                    await File.saveFile(req.body.name,fileUrl,format,created_at,bytes)
+                    res.redirect('/files')
                 }
             ).end(req.file.buffer)
         } catch (error) {
