@@ -18,7 +18,7 @@ const uploadController = {
     uploadPost: async(req,res)=>{
         try {
             //get folderId
-            const folderId = req.query.folderId || null;
+            const {folderId} = req.body || null;
             //upload to cloudinary
             const result = await cloudinary.uploader.upload_stream(
                 //let cloudinary figure out the type of file
@@ -35,7 +35,11 @@ const uploadController = {
                     const fileUrl = result.secure_url;
                     //save to database
                     await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId)
-                    res.redirect(`/folders/${folderId}`)
+                    if(folderId) {
+                        res.redirect(`/folders/${folderId}`)
+                    } else {
+                        res.redirect(`/folders`)
+                    }
                 }
             ).end(req.file.buffer)
         } catch (error) {

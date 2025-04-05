@@ -3,7 +3,7 @@ const folderRouter = Router();
 const pool = require('../db/pool');
 const File = require('../models/File');
 
-folderRouter.get('/', async (req, res) => {
+folderRouter.get('/folders', async (req, res) => {
     try {
         //show root folder and its subfolders
         const subfolders = await File.showFolders();
@@ -39,7 +39,7 @@ folderRouter.get('/folders/:folderId', async (req, res) => {
         if (currentFolder) {
             let ancestor = currentFolder;
             while (ancestor) {
-                currentPath.unshift({ id: ancestor.folderId, name: ancestor.name });
+                currentPath.unshift({ id: ancestor.folder_id, name: ancestor.name });
                 ancestor = await File.getFolderWithId(ancestor.parent_id);
             }
         }

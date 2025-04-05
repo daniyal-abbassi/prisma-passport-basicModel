@@ -17,6 +17,22 @@
     <a href="/upload<%=currentFolderId!==null?'?folderId='+currentFolderId:''%>"</a><button>Upload File</button></a>
 </div>
 
+<h2>folders</h2>
+<div id="folderList">
+    <%if(folders&&folders.length>0) {%>
+        <%folders.forEach(folder=>{%>
+            <li class="folder-item">
+                <span class="item-name"><%=folder.name%></span>
+                <div class="item-btns">
+                    <button onclick="openFolder(<%=folder.folder_id%>)">Open</button>
+                </div>
+            </li>
+        <%})%>
+    <%} else {%>
+        <p>No subfolder here.</p>
+    <%}%>
+</div>
+
 
 <script>
     document.getElementById("createFolderBtn").addEventListener('click',()=>{
@@ -32,8 +48,8 @@
                 body: `name=${encodeURIComponent(folderName)}&parentId=${encodeURIComponent(parentId)}`
             })
             .then(response=>{
-                if(response.ok) {
-                    window.location.reload()
+                if (response.ok) {
+                    window.location.reload();
                 } else {
                     console.error('Failed to create folder: ',response)
                     alert('Fail to create folder.');
@@ -41,4 +57,9 @@
             }) //then
         } // if 
     })
+    //open folder function
+    function openFolder(folderId) {
+        window.location.href=`/folders/${folderId}`;
+        console.log('clicked')
+    }
 </script>
