@@ -5,10 +5,10 @@
         <%files.forEach(file=>{%>
             <li>
                 <p>name: </p> <span><%=file.filename%></span>
-                <p>url: </p> <span><%=file.url%></span>
                 <p>size: </p> <span><%=file.size%></span>
                 <p>type: </p> <span><%=file.type%></span>
                 <p>date: </p> <small><%=file.date%></small>
+                <button><a href="<%= file.url.replace('/upload/', '/upload/fl_attachment/') %>">Download</a></button>
             </li>
         <%})%>
     <%} else {%>
