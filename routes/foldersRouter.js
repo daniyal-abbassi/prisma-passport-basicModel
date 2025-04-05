@@ -11,7 +11,7 @@ folderRouter.get('/folder/:folderId', async (req, res) => {
         const currentFolder = currentFolderResult.rows[0];
 
         //get subfolders in parant folder
-        const subFoldersResult = await pool.query('SELECT * FROM folders WHERE parant_id=$1 ORDER BY name', [folderId]);
+        const subFoldersResult = await pool.query('SELECT * FROM folders WHERE parent_id=$1 ORDER BY name', [folderId]);
         const subFolders = subFoldersResult.rows;
 
         //get the files inside this folder
