@@ -3,32 +3,53 @@ const folderRouter = Router();
 const pool = require('../db/pool');
 const File = require('../models/File');
 
-folderRouter.get('/folder/:folderId', async (req, res) => {
+folderRouter.get('/', async (req, res) => {
+    try {
+        //show root folder and its subfolders
+        const subfolders = await File.showFolders();
+        const files = await File.showFiles(null); // No folder ID for root level files (if you allow this)
+
+        res.render('files', {
+            folders: subfolders,
+            files: files,
+            currentFolderId: null,
+            currentPath: [{ id: null, name: 'Root' }]
+        });
+    } catch (error) {
+        console.error('Error fetching root level:', error);
+        res.status(500).send('Error fetching root level');
+    }
+});
+
+
+folderRouter.get('/folders/:folderId', async (req, res) => {
     const { folderId } = req.params;
     try {
         //get the current folder
-        const currentFolderResult = await pool.query('SELECT * FROM folders WHERE folder_id=$1', [folderId]);
-        const currentFolder = currentFolderResult.rows[0];
+        const currentFolder = await File.getFolderWithId(folderId);
 
         //get subfolders in parant folder
-        const subFoldersResult = await pool.query('SELECT * FROM folders WHERE parent_id=$1 ORDER BY name', [folderId]);
-        const subFolders = subFoldersResult.rows;
+        const subFolders = await File.getSubFoldersWithId(folderId);
 
         //get the files inside this folder
         const files = await File.showFiles(folderId);
 
-        //current path
+        //folder paths array - contains of an object{id,name}
         let currentPath = [];
         if (currentFolder) {
             let ancestor = currentFolder;
             while (ancestor) {
                 currentPath.unshift({ id: ancestor.folderId, name: ancestor.name });
-                const parantResult = await pool.query('SELECT folder_id,name,parant_id FROM folders WHERE folder_id=$1', [ancestor.parant_id]);
-                ancestor = parantResult.rows[0]
+                ancestor = await File.getFolderWithId(ancestor.parent_id);
             }
         }
 
-        res.render('files', { folders: subFolders, files: files, currentFolderId: folderId, currentPath: currentPath })
+        res.render('files', {
+            folders: subFolders,
+            files: files,
+            currentFolderId: folderId,
+            currentPath: currentPath
+        })
     } catch (error) {
         console.error('Error fetching folder contents:', error);
         res.status(500).send('Error fetching folder contents');
