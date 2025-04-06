@@ -19,6 +19,16 @@ const User = {
             console.error('ERROR IN USER.createUser: ',error);
             throw error;
         }
+    },
+    findById: async(userId)=>{
+        try {
+            const results = await pool.query('SELECT * FROM users WHERE user_id=$1',[userId]);
+            return results.rows[0];
+        } catch (error) {
+            console.error('ERROR IN USER.createUser: ',error);
+            throw error;
+            
+        }
     }
 }
 
