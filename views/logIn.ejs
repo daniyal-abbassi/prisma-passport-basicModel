@@ -7,3 +7,11 @@
 
     <input type="submit" value="log-in" />
 </form>
+
+<%if(errorMsgs.error && errorMsgs.error.length>0) {%>
+    <div class="error-messages">
+        <%errorMsgs.error.forEach(err=>{%>
+            <p><%=err%></p>
+        <%})%>
+    </div>
+<%}%>

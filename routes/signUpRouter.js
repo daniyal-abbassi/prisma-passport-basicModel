@@ -3,7 +3,8 @@ const passport = require('passport');
 const signUpRouter = Router();
 
 signUpRouter.get('/',(req,res)=>{
-    res.render('signUp')
+    const errorMessages = {error: req.flash('error')}
+    res.render('signUp',{errorMsgs: errorMessages})
 })
 
 signUpRouter.post('/',passport.authenticate('local-signUp',{
