@@ -8,6 +8,7 @@ require('./passport-config');
 //router files
 const uploadRouter= require('./routes/uploadRouter');
 const folderRouter = require('./routes/foldersRouter');
+const signUpRouter = require('./routes/signUpRouter');
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({ 
     cloud_name: 'dajzulqra', 
@@ -31,6 +32,7 @@ app.use(passport.session());
 
 app.use('/upload',uploadRouter)
 app.use('/',folderRouter)
+app.use('/sign-up',signUpRouter)
 
 
 app.listen(3000,()=>console.log('app is runnig on port: ',3000))
