@@ -81,7 +81,6 @@ folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
         const {name} = req.body;
         const folderId = req.params.folderId;
         await File.editFolderNameById(name,folderId);
-        res.sendStatus(204);
         res.redirect(`/folders/${folderId}`);
     } catch (error) {
         console.error('Error editing folder:', error);
