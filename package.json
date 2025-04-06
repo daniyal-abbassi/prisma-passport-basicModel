@@ -18,6 +18,7 @@
   "homepage": "https://github.com/daniyal-abbassi/prisma-passport-basicModel#readme",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.5.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.6.0",
     "connect-flash": "^0.1.1",
@@ -31,5 +32,8 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "prisma": "^6.5.0"
   }
 }
