@@ -1,15 +1,14 @@
 const { Router } = require('express');
 const folderRouter = Router();
-const pool = require('../db/pool');
-const File = require('../models/File');
+const dbClient = require('../models/dbClient');
 const ensureLoggedIn = require('../middleware/auth');
 
 // main folders page router
 folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
     try {
         //show root folder and its subfolders
-        const subfolders = await File.showFolders();
-        const files = await File.showFiles(null); // No folder ID for root level files (if you allow this)
+        const subfolders = await dbClient.showRootFolder();
+        const files = await dbClient.showFiles(null); // No folder ID for root level files (if you allow this)
 
         res.render('files', {
             folders: subfolders,
@@ -28,13 +27,13 @@ folderRouter.get('/folders/:folderId',async (req, res) => {
     const { folderId } = req.params;
     try {
         //get the current folder
-        const currentFolder = await File.getFolderWithId(folderId);
+        const currentFolder = await dbClient.getParentFolderWithId(folderId);
 
         //get subfolders in parant folder
-        const subFolders = await File.getSubFoldersWithId(folderId);
+        const subFolders = await dbClient.getSubFoldersWithId(folderId);
 
         //get the files inside this folder
-        const files = await File.showFiles(folderId);
+        const files = await dbClient.showFiles(folderId);
 
         //folder paths array - contains of an object{id,name}
         let currentPath = [];
@@ -42,7 +41,7 @@ folderRouter.get('/folders/:folderId',async (req, res) => {
             let ancestor = currentFolder;
             while (ancestor) {
                 currentPath.unshift({ id: ancestor.folder_id, name: ancestor.name });
-                ancestor = await File.getFolderWithId(ancestor.parent_id);
+                ancestor = await File.getParentFolderWithId(ancestor.parent_id);
             }
         }
 
@@ -63,11 +62,9 @@ folderRouter.post('/folders',async(req,res)=>{
         let {name,parentId} = req.body;
         //get user_id
         const {user_id} = req.user;
-        if(!parentId) {
-            await File.createFolder(name,null,user_id);
-        } else {
-            await File.createFolder(name,parentId,user_id)
-        }
+        //handle null in prisma model(if null or number)
+        await dbClient.createFolder(name,parentId,user_id)
+        
         res.sendStatus(204);
     } catch (error) {
         console.error('Error creating folder:', error);
@@ -80,7 +77,7 @@ folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
     try {
         const {name} = req.body;
         const folderId = req.params.folderId;
-        await File.editFolderNameById(name,folderId);
+        await dbClient.editFolderNameById(name,folderId);
         res.redirect(`/folders/${folderId}`);
     } catch (error) {
         console.error('Error editing folder:', error);
@@ -92,7 +89,7 @@ folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
 folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
     try {
         const {folderId} = req.params;
-        await File.deleteFolder(folderId);
+        await dbClient.deleteFolderWithId(folderId);
         res.sendStatus(204);
     } catch (error) {
         console.error('Error deleting folder:', error);
@@ -104,7 +101,7 @@ folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
 folderRouter.post('/files/:fileId/delete',ensureLoggedIn,async(req,res)=>{
     try {
         const {fileId} = req.params;
-        await File.deleteFile(fileId)
+        await dbClient.deleteFile(fileId)
         res.sendStatus(204);
     } catch (error) {
         console.error('Error deleting file:', error);
