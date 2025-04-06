@@ -4,25 +4,31 @@ require('dotenv').config();
 // auth
 const passport = require('passport');
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+const pool = require('./db/pool');
 const flash = require('connect-flash');
 require('./passport-config');
 //router files
-const uploadRouter= require('./routes/uploadRouter');
+const uploadRouter = require('./routes/uploadRouter');
 const folderRouter = require('./routes/foldersRouter');
 const signUpRouter = require('./routes/signUpRouter');
 const logInRouter = require('./routes/logInRouter');
 const cloudinary = require('cloudinary').v2;
-cloudinary.config({ 
-    cloud_name: 'dajzulqra', 
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET 
+cloudinary.config({
+    cloud_name: 'dajzulqra',
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-app.use(express.urlencoded({extended: true}))
-app.set('view engine','ejs');
+app.use(express.urlencoded({ extended: true }))
+app.set('view engine', 'ejs');
 
 //session
 app.use(session({
+    store: new pgSession({
+        pool: pool,
+        createTableIfMissing: true,
+    }),
     secret: 'we-all-are-connected',
     resave: false,
     saveUninitialized: false,
@@ -33,9 +39,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/upload',uploadRouter)
-app.use('/',folderRouter)
-app.use('/sign-up',signUpRouter)
-app.use('/log-in',logInRouter)
+app.use('/upload', uploadRouter)
+app.use('/', folderRouter)
+app.use('/sign-up', signUpRouter)
+app.use('/log-in', logInRouter)
 
-app.listen(3000,()=>console.log('app is runnig on port: ',3000))
+app.listen(3000, () => console.log('app is runnig on port: ', 3000))
