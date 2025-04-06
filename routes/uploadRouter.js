@@ -5,10 +5,11 @@ const uploadRouter = Router();
 const uploadController= require('../controllers/UploadController');
 //multer for handling files in req object
 const multer = require('multer');
+const ensureLoggedIn = require('../middleware/auth');
 const upload = multer({storage: multer.memoryStorage()})
 
 
-uploadRouter.get('/',uploadController.uploadGet)
+uploadRouter.get('/',ensureLoggedIn,uploadController.uploadGet)
 
 uploadRouter.post('/',upload.single('file'),uploadController.uploadPost)
 

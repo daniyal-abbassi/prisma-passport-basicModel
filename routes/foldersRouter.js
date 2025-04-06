@@ -2,9 +2,10 @@ const { Router } = require('express');
 const folderRouter = Router();
 const pool = require('../db/pool');
 const File = require('../models/File');
+const ensureLoggedIn = require('../middleware/auth');
 
 // main folders page router
-folderRouter.get('/folders', async (req, res) => {
+folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
     try {
         //show root folder and its subfolders
         const subfolders = await File.showFolders();
@@ -23,7 +24,7 @@ folderRouter.get('/folders', async (req, res) => {
 });
 
 
-folderRouter.get('/folders/:folderId', async (req, res) => {
+folderRouter.get('/folders/:folderId',async (req, res) => {
     const { folderId } = req.params;
     try {
         //get the current folder
@@ -99,7 +100,7 @@ folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
 })
 
 // deletin a file
-folderRouter.post('/files/:fileId/delete',async(req,res)=>{
+folderRouter.post('/files/:fileId/delete',ensureLoggedIn,async(req,res)=>{
     try {
         const {fileId} = req.params;
         await File.deleteFile(fileId)
