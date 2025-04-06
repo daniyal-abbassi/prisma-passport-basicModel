@@ -32,6 +32,7 @@ app.use(session({
     secret: 'we-all-are-connected',
     resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 1000 }
 }))
 
 app.use(flash());
