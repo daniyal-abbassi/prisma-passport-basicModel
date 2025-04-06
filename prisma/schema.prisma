@@ -21,6 +21,8 @@ model User {
   //relations
   files    File[]
   folders  Folder[]
+
+  @@map("public.users")
 }
 
 // folder model
@@ -34,6 +36,8 @@ model Folder {
   user       User?    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
   parent     Folder?  @relation("Subfolders", fields: [parent_id], references: [folder_id], onDelete: Cascade, onUpdate: NoAction)
   subfolders Folder[] @relation("Subfolders")
+
+  @@map("public.folders")
 }
 
 // files model
@@ -49,4 +53,6 @@ model File {
   user_id   Int?
   folder Folder? @relation(fields: [folder_id],references: [folder_id], onDelete: Cascade)
   user      User?   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  @@map("public.files")
 }
