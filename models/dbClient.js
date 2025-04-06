@@ -110,7 +110,7 @@ const dbClient = {
             await prisma.folder.create({
                 data: {
                     name,
-                    parent_id: parantId,
+                    parent_id: parantId===null ? null:parantId,
                     user_id: userId,
                 }
             })
