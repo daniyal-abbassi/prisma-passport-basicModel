@@ -15,9 +15,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN READING FILES', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     saveFile: async(filename,url,type ,date ,size ,folderId,userId)=>{
         try {
@@ -35,9 +33,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN CREATING FILE', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     deleteFile: async(fileId)=>{
         try {
@@ -49,9 +45,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN DELETING FILE', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     // FOLDER QUERIES
     showRootFolder: async()=>{
@@ -68,9 +62,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN SHOWING ROOT FOLDER', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     getParentFolderWithId: async(folderId)=>{
         try {
@@ -83,9 +75,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN GET PARENT FOLDER WITH ID', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     getSubFoldersWithId: async(folderId)=>{
         try {
@@ -101,9 +91,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN GET SUB-FOLDER WITH ID', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     createFolder: async(name,parantId,userId)=>{
         try {
@@ -117,9 +105,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN CREATING FOLDER', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     editFolderNameById: async(newName,folderId)=>{
         try {
@@ -134,9 +120,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN EDITING FOLDER-NAME WITH ID', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     deleteFolderWithId: async(folderId)=>{
         try {
@@ -148,9 +132,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN DELETING FOLDER WITH ID', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     // USER QUERIES
 
@@ -165,9 +147,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN FINDING USER WITH USERNAME', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     createUser: async(username,password)=>{
         try {
@@ -181,9 +161,7 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN CREATING USER', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     },
     findUserById: async(userId)=>{
         try {
@@ -196,8 +174,8 @@ const dbClient = {
         } catch (error) {
             console.error('ERROR IN FINDING USER WITH ID', error);
             throw error;
-        } finally {
-            await prisma.$disconnect();
-        }
+        } 
     }
 }
+
+module.exports=dbClient;
