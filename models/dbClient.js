@@ -28,7 +28,7 @@ const dbClient = {
                     type,
                     date,
                     size,
-                    folder_id: folderId,
+                    folder_id: folderId===null?null:folderId,
                     user_id: userId, 
                 },
             })
