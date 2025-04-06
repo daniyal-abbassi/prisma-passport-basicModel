@@ -61,10 +61,12 @@ folderRouter.get('/folders/:folderId',async (req, res) => {
 folderRouter.post('/folders',async(req,res)=>{
     try {
         let {name,parentId} = req.body;
+        //get user_id
+        const {user_id} = req.user;
         if(!parentId) {
-            await File.createFolder(name,null);
+            await File.createFolder(name,null,user_id);
         } else {
-            await File.createFolder(name,parentId)
+            await File.createFolder(name,parentId,user_id)
         }
         res.sendStatus(204);
     } catch (error) {

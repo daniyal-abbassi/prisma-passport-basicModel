@@ -19,6 +19,8 @@ const uploadController = {
         try {
             //get folderId
             const {folderId} = req.body || null;
+            //get user_id
+            const {user_id} = req.user;
             //upload to cloudinary
             const result = await cloudinary.uploader.upload_stream(
                 //let cloudinary figure out the type of file
@@ -35,11 +37,11 @@ const uploadController = {
                     const fileUrl = result.secure_url;
                     if(folderId) {
                         //save to database if there is a folderId in integer form
-                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId)
+                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId,user_id)
                         res.redirect(`/folders/${folderId}`)
                     } else {
 
-                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,null)
+                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,null,user_id)
                         res.redirect(`/folders`)
                     }
                 }

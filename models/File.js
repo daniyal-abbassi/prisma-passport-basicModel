@@ -18,9 +18,9 @@ const File = {
         }
     },
     //insert to database(file)
-    saveFile: async (filename, url, type, date, size, folder_id) => {
+    saveFile: async (filename, url, type, date, size, folder_id,user_id) => {
         try {
-            await pool.query('INSERT INTO files(filename,url,type,date,size,folder_id) VALUES($1,$2,$3,$4,$5,$6)', [filename, url, type, date, size, folder_id]);
+            await pool.query('INSERT INTO files(filename,url,type,date,size,folder_id,user_id) VALUES($1,$2,$3,$4,$5,$6,$7)', [filename, url, type, date, size, folder_id,user_id]);
         } catch (error) {
             console.error('ERROR IN SAVING FILE', error);
             throw error;
@@ -63,9 +63,9 @@ const File = {
             throw error
         }
     },
-    createFolder: async (name, parentId) => {
+    createFolder: async (name, parentId,user_id) => {
         try {
-            await pool.query('INSERT INTO folders(name,parent_id) VALUES($1,$2)', [name, parentId]);
+            await pool.query('INSERT INTO folders(name,parent_id,user_id) VALUES($1,$2,$3)', [name, parentId,user_id]);
         } catch (error) {
             console.error('ERROR CREATING FOLDERS', error);
             throw error
