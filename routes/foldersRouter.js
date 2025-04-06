@@ -56,29 +56,29 @@ folderRouter.get('/folders/:folderId', async (req, res) => {
         res.status(500).send('Error fetching folder contents');
     }
 })
-
+// create a folder
 folderRouter.post('/folders',async(req,res)=>{
     try {
         let {name,parentId} = req.body;
         if(!parentId) {
-            await File.createFolder(name,null)
+            await File.createFolder(name,null);
         } else {
             await File.createFolder(name,parentId)
         }
-        
+        res.sendStatus(204);
     } catch (error) {
         console.error('Error creating folder:', error);
         res.status(500).send('Error creating folder');
     
     }
 })
-
+// edit a folder's name 
 folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
     try {
         const {name} = req.body;
         const folderId = req.params.folderId;
-        console.log('this is name: ',name,'  and this is id: ',folderId)
         await File.editFolderNameById(name,folderId);
+        res.sendStatus(204);
         res.redirect(`/folders/${folderId}`);
     } catch (error) {
         console.error('Error editing folder:', error);
@@ -90,7 +90,8 @@ folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
 folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
     try {
         const {folderId} = req.params;
-        await File.deleteFolder(folderId)
+        await File.deleteFolder(folderId);
+        res.sendStatus(204);
     } catch (error) {
         console.error('Error deleting folder:', error);
         res.status(500).send('Error deleting folder');
