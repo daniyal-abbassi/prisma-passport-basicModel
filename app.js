@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+// auth
+const passport = require('passport');
+const session = require('express-session');
 
 //router files
 const uploadRouter= require('./routes/uploadRouter');
@@ -15,7 +18,15 @@ cloudinary.config({
 app.use(express.urlencoded({extended: true}))
 app.set('view engine','ejs');
 
+//session
+app.use(session({
+    secret: 'we-all-are-connected',
+    resave: false,
+    saveUninitialized: false,
+}))
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use('/upload',uploadRouter)
