@@ -4,6 +4,7 @@ require('dotenv').config();
 // auth
 const passport = require('passport');
 const session = require('express-session');
+const flash = require('connect-flash');
 require('./passport-config');
 //router files
 const uploadRouter= require('./routes/uploadRouter');
@@ -27,6 +28,7 @@ app.use(session({
     saveUninitialized: false,
 }))
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
