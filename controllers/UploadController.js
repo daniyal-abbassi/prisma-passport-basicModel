@@ -1,5 +1,5 @@
 // uploadRouter controller file
-const File = require('../models/File');
+const dbClient = require('../models/dbClient'); 
 const cloudinary = require('cloudinary').v2;
 
 const uploadController = {
@@ -35,15 +35,11 @@ const uploadController = {
                     
                     //get the url
                     const fileUrl = result.secure_url;
-                    if(folderId) {
-                        //save to database if there is a folderId in integer form
-                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId,user_id)
+                    
+                     //handle null folderId in prisma model
+                     await dbClient.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId,user_id)
                         res.redirect(`/folders/${folderId}`)
-                    } else {
-
-                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,null,user_id)
-                        res.redirect(`/folders`)
-                    }
+                   
                 }
             ).end(req.file.buffer)
         } catch (error) {
