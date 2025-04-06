@@ -3,6 +3,7 @@ const folderRouter = Router();
 const pool = require('../db/pool');
 const File = require('../models/File');
 
+// main folders page router
 folderRouter.get('/folders', async (req, res) => {
     try {
         //show root folder and its subfolders
@@ -93,6 +94,18 @@ folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
     } catch (error) {
         console.error('Error deleting folder:', error);
         res.status(500).send('Error deleting folder');
+    }
+})
+
+// deletin a file
+folderRouter.post('/files/:fileId/delete',async(req,res)=>{
+    try {
+        const {fileId} = req.params;
+        await File.deleteFile(fileId)
+        res.sendStatus(204);
+    } catch (error) {
+        console.error('Error deleting file:', error);
+        res.status(500).send('Error deleting file');
     }
 })
 module.exports = folderRouter;

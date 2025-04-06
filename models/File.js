@@ -5,8 +5,13 @@ const pool = require('../db/pool');
 const File = {
     showFiles: async (folder_id) => {
         try {
-            const results = await pool.query('SELECT * FROM files WHERE folder_id=$1', [folder_id]);
-            return results.rows;
+            if(folder_id!==null) {
+                let results = await pool.query('SELECT * FROM files WHERE folder_id=$1', [folder_id]);
+                return results.rows;
+            } else {
+                let results = await pool.query('SELECT * FROM files WHERE folder_id IS NULL');
+                return results.rows;
+            }
         } catch (error) {
             console.error('ERROR IN READING FILES', error);
             throw error;
