@@ -33,11 +33,13 @@ const uploadController = {
                     
                     //get the url
                     const fileUrl = result.secure_url;
-                    //save to database
-                    await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId)
                     if(folderId) {
+                        //save to database if there is a folderId in integer form
+                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,folderId)
                         res.redirect(`/folders/${folderId}`)
                     } else {
+
+                        await File.saveFile(req.body.name,fileUrl,format,created_at,bytes,null)
                         res.redirect(`/folders`)
                     }
                 }
