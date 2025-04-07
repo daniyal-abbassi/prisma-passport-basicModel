@@ -4,7 +4,7 @@ const logInRouter = Router();
 
 logInRouter.get('/',(req,res)=>{
     const errorMessages = {error: req.flash('error')}
-    res.render('logIn',{errorMsgs: errorMessages})
+    res.render('logIn',{layout: './layouts/main',title: 'Log in',errorMsgs: errorMessages})
 })
 
 logInRouter.post('/',passport.authenticate('local-logIn',{
