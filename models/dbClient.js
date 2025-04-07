@@ -4,12 +4,14 @@ const prisma = require('./client');
 // QUERIES FOR FILE, FOLDER AND USER MODEL
 const dbClient = {
     // FILE QUERIES
-    showFiles: async(folderId)=>{
-        const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId)
+    showFiles: async(folderId,userId)=>{
+        const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId);
+        const parsedUserId = parseInt(userId);
         try {
             const files = await prisma.file.findMany({
                 where: {
-                    folder_id: parsedFolderId
+                    folder_id: parsedFolderId,
+                    user_id: parsedUserId,
                 },
             });
             return files;
@@ -52,11 +54,13 @@ const dbClient = {
         } 
     },
     // FOLDER QUERIES
-    showRootFolder: async()=>{
+    showRootFolder: async(userId)=>{
+        const parsedUserId = parseInt(userId);
         try {
             const folders = await prisma.folder.findMany({
                 where: {
                     parent_id: null,
+                    user_id: parsedUserId,
                 },
                 orderBy: {
                     name: 'asc',
@@ -68,12 +72,14 @@ const dbClient = {
             throw error;
         } 
     },
-    getParentFolderWithId: async(folderId)=>{
-        const parsedFolderId = (folderId==='null'||folderId===null||folderId==='') ? null: parseInt(folderId)
+    getParentFolderWithId: async(folderId,userId)=>{
+        const parsedFolderId = (folderId==='null'||folderId===null||folderId==='') ? null: parseInt(folderId);
+        const parsedUserId = parseInt(userId)
         try {
             const currentFolder = await prisma.folder.findFirst({
                 where: {
                     folder_id: parsedFolderId,
+                    user_id: parsedUserId,
                 },
             })
             return currentFolder;
@@ -82,12 +88,14 @@ const dbClient = {
             throw error;
         } 
     },
-    getSubFoldersWithId: async(folderId)=>{
+    getSubFoldersWithId: async(folderId,userId)=>{
         const parsedFolderId = (folderId==='null'||folderId===null) ? null:parseInt(folderId);
+        const parsedUserId = parseInt(userId);
         try {
             const subFolders = await prisma.folder.findMany({
                 where: {
                     parent_id: parsedFolderId,
+                    user_id: parsedUserId,
                 },
                 orderBy: {
                     name: 'asc'

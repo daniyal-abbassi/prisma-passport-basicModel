@@ -4,11 +4,12 @@ const dbClient = require('../models/dbClient');
 const ensureLoggedIn = require('../middleware/auth');
 
 // main folders page router
-folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
+folderRouter.get('/',ensureLoggedIn,async (req, res) => {
     try {
+        const { user_id } = req.user;
         //show root folder and its subfolders
-        const subfolders = await dbClient.showRootFolder();
-        const files = await dbClient.showFiles(null); // No folder ID for root level files (if you allow this)
+        const subfolders = await dbClient.showRootFolder(user_id);
+        const files = await dbClient.showFiles(null,user_id); // No folder ID for root level files (if you allow this)
 
         res.render('files', {
             layout: './layouts/main',
@@ -25,18 +26,19 @@ folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
 });
 
 
-folderRouter.get('/folders/:folderId',async (req, res) => {
+folderRouter.get('/folders/:folderId',ensureLoggedIn,async (req, res) => {
     let folderId = req.params.folderId;
-    folderId = parseInt(folderId)
+    folderId = parseInt(folderId);
+    const { user_id } = req.user;
     try {
         //get the current folder
-        const currentFolder = await dbClient.getParentFolderWithId(folderId);
+        const currentFolder = await dbClient.getParentFolderWithId(folderId,user_id);
 
         //get subfolders in parant folder
-        const subFolders = await dbClient.getSubFoldersWithId(folderId);
+        const subFolders = await dbClient.getSubFoldersWithId(folderId,user_id);
 
         //get the files inside this folder
-        const files = await dbClient.showFiles(folderId);
+        const files = await dbClient.showFiles(folderId,user_id);
 
         //folder paths array - contains of an object{id,name}
         let currentPath = [];
@@ -47,7 +49,7 @@ folderRouter.get('/folders/:folderId',async (req, res) => {
                 if(ancestor.parent_id===null) {
                     break
                 }
-                ancestor = await dbClient.getParentFolderWithId(ancestor.parent_id);
+                ancestor = await dbClient.getParentFolderWithId(ancestor.parent_id,user_id);
             }
         }
 

@@ -51,9 +51,12 @@ app.get('/log-out',(req,res)=>{
         res.redirect('/log-in')
     })
 })
+app.use('/sign-up', signUpRouter)
+app.use('/log-in', logInRouter)
 app.use('/upload', uploadRouter)
 app.use('/folders', folderRouter)
-app.use('/sign-up', signUpRouter)
-app.use('/', signUpRouter)
-app.use('/log-in', logInRouter)
+app.get('/',(req,res)=>{
+    res.redirect('/sign-up')
+})
+
 app.listen(3000, () => console.log('app is runnig on port: ', 3000))
