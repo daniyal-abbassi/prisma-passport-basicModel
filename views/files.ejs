@@ -1,45 +1,4 @@
-<h1>file explorer</h1>
-
-<div class="breadcrumb">
-    Current Path: <a href="/folders">Root</a>
-    <% if(currentPath && currentPath.length>0) {%>
-        <%currentPath.forEach(path=>{%>
-            <%if(path.id !== null) {%>
-                <span>&gt;</span>
-                <a href="/folders/<%=path.id%>"><%=path.name%></a>
-            <%}%>
-        <%})%>
-    <%}%>
-</div>
-
-<!--
-    <a href="/upload<%=currentFolderId!==null?'?folderId='+currentFolderId:''%>"</a><button>Upload File</button></a>
-
-
-
-             
- 
-
-<h2>Files</h2>
-<div class="fileList">
-    <%if(files&&files.length>0) {%>
-        <%files.forEach(file=>{%>
-            <li class="file-item">
-                <span class="item-name"><%=file.filename%></span>
-                <div class="item-buttons">
-                    <a href="<%=file.url.replace('/upload/','/upload/fl_attachment/') %>" target="_blank"><button>Download</button></a>
-                    <button onclick="deleteFile(<%=file.file_id%>)">Delete</button>
-                </div>
-            </li>
-        <%})%>
-    <%} else {%>
-        <p>No file here.</p>
-    <%}%>
-</div>
-
--->
-
-    <div class="relative flex size-full min-h-screen flex-col bg-[#111418] dark group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+<div class="relative flex size-full min-h-screen flex-col bg-[#111418] dark group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
       <div class="layout-container flex h-full grow flex-col">
         <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#293038] px-10 py-3">
           <div class="flex items-center gap-4 text-white">
@@ -69,10 +28,12 @@
         <div class="px-40 flex flex-1 justify-center py-5">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
             <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72">Files</p></div>
+
              <!--search section-->
             <div class="px-4 py-3">
               <label class="flex flex-col min-w-40 h-12 w-full">
                 <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+
                     <!--magnifies section-->
                   <div
                     class="text-[#9dabb8] flex border-none bg-[#293038] items-center justify-center pl-4 rounded-l-xl border-r-0"
@@ -86,6 +47,7 @@
                       ></path>
                     </svg>
                   </div>
+
                   <!--search files section-->
                   <input
                     placeholder="Search files"
@@ -95,6 +57,7 @@
                 </div>
               </label>
             </div>
+
             <!--label parts section-->
             <div class="flex gap-3 p-3 flex-wrap pr-4">
               <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
@@ -122,6 +85,33 @@
                 <p class="text-white text-sm font-medium leading-normal">Other</p>
               </div>
             </div>
+
+             <!--breadcrumb section-->
+            <div class="px-4 py-2">
+                <nav class="flex items-center text-white text-sm" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                        <li class="inline-flex items-center">
+                            <a href="/folders" class="inline-flex items-center text-white hover:text-gray-400">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                Home
+                            </a>
+                        </li>
+                        <% if(currentPath && currentPath.length>0) {%>
+                            <%currentPath.forEach(path=>{%>
+                                <%if(path.id !== null) {%>
+                                <li>
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                        <a href="/folders/<%=path.id%>" class="ml-1 text-white hover:text-gray-400"><%=path.name%></a>
+                                    </div>
+                                </li>
+                                <%}%>
+                         <%})%>
+                    <%}%>
+                    </ol>
+                </nav>
+            </div>
+
 
             <!--folders section-->
             <%if(folders&&folders.length>0) {%>
@@ -167,7 +157,93 @@
             <%} else {%>
                 <p>No subfolder here.</p>
             <%}%>
+
+            <!--files section-->
+            <%if(files&&files.length>0) {%>
+                <%files.forEach(file=>{%>
+                    <div class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2 justify-between">
+                        <div class="flex items-center gap-4">
+                            <!--show conditional svg icon section-->
+                            <div class="text-white flex items-center justify-center rounded-lg bg-[#293038] shrink-0 size-12">
+                               <%if(file.type && file.type.startsWith('jpg')) {%>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M224,48H32a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H224a8,8,0,0,0,8-8V56A8,8,0,0,0,224,48ZM48,184l40-56,40,40,48-64Zm160-16V72H48v96l48-64,40,48,48-32Z"></path>
+                                    </svg>
+                                <% } else if (file.type && file.type.startsWith('video')) { %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M224,56V200a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8H216A8,8,0,0,1,224,56ZM104,168V88l64,40Z"></path>
+                                    </svg>
+                                <% } else if (file.type && file.type.startsWith('audio')) { %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M184,40a40,40,0,0,0-40,40v88a40,40,0,0,0,80,0V80A40,40,0,0,0,184,40ZM88,168a40,40,0,0,0-40-40V40A40,40,0,0,0,88,40v88A40,40,0,0,0,48,168Zm96-88v88a24,24,0,0,1-48,0V80a24,24,0,0,1,48,0Z"></path>
+                                    </svg>
+                                <% } else if (file.type && (file.type.includes('document') || file.type.includes('text'))) { %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M200,216H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40H168l48,48V200A16,16,0,0,1,200,216ZM176,56H56V200H200V96H176ZM160,64v32h40Z"></path>
+                                    </svg>
+                                <% } else { %>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M200,216H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40H168l48,48V200A16,16,0,0,1,200,216ZM176,56H56V200H200V96H176ZM160,64v32h40Z"></path>
+                                    </svg>
+                                 <% } %>  
+                            </div>
+
+                            <!--name and size section-->
+                            <div class="flex flex-col justify-center">
+                                <p class="text-white text-base font-medium leading-normal line-clamp-1"><%=file.filename%></p>
+                                <p class="text-[#9dabb8] text-sm font-normal leading-normal">
+                                    <% if (file.size >= 1024 * 1024) { %>
+                                        <%= (file.size / (1024 * 1024)).toFixed(2) %> MB
+                                    <% } else if (file.size >= 1024) { %>
+                                        <%= (file.size / 1024).toFixed(0) %> KB
+                                    <% } else { %>
+                                        <%= file.size %> bytes
+                                    <% } %>
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <!--test section-->
+                        <div class="flex flex-row justify-center gap-5 items-end">
+                            <%if(!file.type) {%>
+                                <p class="text-[#9dabb8] text-sm font-normal leading-normal">Doc</p>
+                            <%} else {%>
+                                <p class="text-[#9dabb8] text-sm font-normal leading-normal"><%= file.type %></p>
+                            <%}%>
+                            <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2"><%= new Date(file.date).toLocaleDateString()%></p>
+                        </div>
+                        <!--donwload,share and delete section-->
+                        <button onclick="shareFile('<%=file.file_id%>')" class="text-white flex size-7 items-center justify-center hover:text-indigo-500" title="Share File">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                              </svg>
+                        </button>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <a href="<%=file.url.replace('/upload/','/upload/fl_attachment/') %>" target="_blank" class="text-white flex size-7 items-center justify-center hover:text-green-500" title="Download File">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M216,176V216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V176a8,8,0,0,1,8-8H88v32H168V168h40A8,8,0,0,1,216,176ZM128,112l40,40H136v48H120V152H88Z"></path>
+                                </svg>
+                            </a>
+
+                            <button onclick="deleteFile(<%=file.file_id%>)" class="text-white flex size-7 items-center justify-center hover:text-red-500" title="Delete File">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,184a8,8,0,0,1-8-8V88a8,8,0,0,1,16,0v88A8,8,0,0,1,96,184Zm64,0a8,8,0,0,1-8-8V88a8,8,0,0,1,16,0v88A8,8,0,0,1,160,184ZM152,48H104V40a8,8,0,0,1,8-8h32a8,8,0,0,1,8,8Z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                <%})%>
+            <%} else {%>
+                <p>No Files Yet.</p>
+            <%}%>
+            
            
+            
+
             <!--new folder button-->
             <div class="flex px-4 py-3">
               <button
