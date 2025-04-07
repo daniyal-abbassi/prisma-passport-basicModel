@@ -68,6 +68,7 @@ folderRouter.get('/folders/:folderId',ensureLoggedIn,async (req, res) => {
 })
 // create a folder
 folderRouter.post('/folders',async(req,res)=>{
+    console.log('in the post/folders,create folder',req.user)
     try {
         let {name,parentId} = req.body;
         //get user_id

@@ -51,10 +51,10 @@ app.get('/log-out',(req,res)=>{
         res.redirect('/log-in')
     })
 })
+app.use('/folders', folderRouter)
 app.use('/sign-up', signUpRouter)
 app.use('/log-in', logInRouter)
 app.use('/upload', uploadRouter)
-app.use('/folders', folderRouter)
 app.get('/',(req,res)=>{
     res.redirect('/sign-up')
 })
