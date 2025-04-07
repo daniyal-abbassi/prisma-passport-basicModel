@@ -19,7 +19,10 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-
+const expressLayouts = require('express-ejs-layouts');
+app.use(expressLayouts);
+app.use(express.static('public'));
+app.set('layout','./layouts/main')
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs');
 
