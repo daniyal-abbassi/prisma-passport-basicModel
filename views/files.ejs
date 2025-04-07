@@ -155,7 +155,13 @@
                     </div>                
                 <%})%>
             <%} else {%>
-                <p>No subfolder here.</p>
+                <div class="flex flex-col items-center justify-center py-8 px-4 text-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256" class="opacity-50">
+                        <path d="M216,72H131.31L104,44.69A15.86,15.86,0,0,0,92.69,40H40A16,16,0,0,0,24,56V200.62A15.4,15.4,0,0,0,39.38,216H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72ZM40,56H92.69l16,16H40ZM216,200H40V88H216Z"></path>
+                    </svg>
+                    <p class="mt-4 text-lg font-medium leading-normal opacity-70">No subfolders here.</p>
+                    <p class="mt-2 text-sm font-normal leading-normal opacity-60">You can create new folders to organize your files.</p>
+                    </div>
             <%}%>
 
             <!--files section-->
@@ -238,7 +244,12 @@
                     </div>
                 <%})%>
             <%} else {%>
-                <p>No Files Yet.</p>
+                <div class="flex flex-col items-center justify-center py-8 px-4 text-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256" class="opacity-50">
+                        <path d="M216,48H40a16,16,0,0,0-16,16V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V64A16,16,0,0,0,216,48ZM48,192V72H208v120Z"></path>
+                    </svg>
+                    <p class="mt-4 text-lg font-medium leading-normal opacity-70">No files here yet.</p>
+                </div>
             <%}%>
             
            
