@@ -38,7 +38,7 @@
         </header>
         <div class="px-40 flex flex-1 justify-center py-5">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72">Files</p></div>
+            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72 files-title">Files</p></div>
 
              <!--search section-->
             <div class="px-4 py-3">
@@ -76,7 +76,7 @@
                 <nav class="flex items-center text-white text-sm" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <li class="inline-flex items-center">
-                            <a href="/folders" class="inline-flex items-center text-white hover:text-gray-400">
+                            <a href="/folders" class="inline-flex items-center text-white hover:text-blue-400">
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                                 Home
                             </a>
@@ -87,7 +87,7 @@
                                 <li>
                                     <div class="flex items-center">
                                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                        <a href="/folders/<%=path.id%>" class="ml-1 text-white hover:text-gray-400"><%=path.name%></a>
+                                        <a href="/folders/<%=path.id%>" class="ml-1 text-white hover:text-blue-400"><%=path.name%></a>
                                     </div>
                                 </li>
                                 <%}%>
@@ -101,17 +101,17 @@
             <!--folders section-->
             <%if(folders&&folders.length>0) {%>
                 <%folders.forEach(folder=>{%>                                       
-                    <div class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2 justify-between">
+                    <div class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2 justify-between folder-container">
                         <div class="flex items-center gap-4">
                             <div class="text-white flex items-center justify-center rounded-lg bg-[#293038] shrink-0 size-12" data-icon="Folder" data-size="24px" data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                <svg class="folder-svg" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                                     <path
                                       d="M216,72H131.31L104,44.69A15.86,15.86,0,0,0,92.69,40H40A16,16,0,0,0,24,56V200.62A15.4,15.4,0,0,0,39.38,216H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72ZM40,56H92.69l16,16H40ZM216,200H40V88H216Z"
                                     ></path>
                                 </svg>
                             </div>
                             <div class="flex flex-col justify-center">
-                                <p class="text-white text-base font-medium leading-normal line-clamp-1"><%=folder.name%></p>
+                                <p onclick="openFolder(<%=folder.folder_id%>)" class="text-white text-base font-medium leading-normal line-clamp-1 folder-name"><%=folder.name%></p>
                                 <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2">x files</p>
                             </div>
                         </div>
@@ -119,15 +119,15 @@
                         <div class="flex items-center gap-2 shrink-0">
                             <!--open icon-->
                             <button onclick="openFolder(<%=folder.folder_id%>)" class="text-white flex size-7 items-center justify-center hover:text-blue-500" title="Open Folder">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M224.49,115.51l-72-72a8,8,0,0,0-11.32,11.32L200.69,112H40a8,8,0,0,0,0,16H200.69l-59.52,64.17a8,8,0,0,0,11.32,11.32l72-72A8,8,0,0,0,224.49,115.51Z"></path>
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 13V9a2 2 0 0 1 2-2h6l2 3h8v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
+                                    <polyline points="12 12 15 15 12 18" />
+                                    <line x1="15" y1="15" x2="1" y2="15" />
+                                  </svg>
                             </button>
                             <!--edit icon-->
                             <button onclick="editFolder(<%=folder.folder_id%>, '<%=folder.name%>')" class="text-white flex size-7 items-center justify-center hover:text-yellow-500" title="Edit Folder">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M227.25,30.75a16,16,0,0,0-22.63,0L37.63,197.75a8,8,0,0,0-1.32,3.53l-8,48a8,8,0,0,0,9.19,9.19l48-8a8,8,0,0,0,3.53-1.32L227.25,53.38A16,16,0,0,0,227.25,30.75ZM52.76,216l4.61-27.63L194.87,71.51l-27.63,4.61Z"></path>
-                                </svg>
+                                <svg class="feather feather-edit" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                             </button>
                             <!--delete icon-->
                             <button onclick="deleteFolder(<%=folder.folder_id%>)" class="text-white flex size-7 items-center justify-center hover:text-red-500" title="Delete Folder">
@@ -152,7 +152,7 @@
             <!--files section-->
             <%if(files&&files.length>0) {%>
                 <%files.forEach(file=>{%>
-                    <div class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2 justify-between">
+                    <div class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2 justify-between files-container">
                         <div class="flex items-center gap-4">
                             <!--show conditional svg icon section-->
                             <div class="text-white flex items-center justify-center rounded-lg bg-[#293038] shrink-0 size-12">
@@ -181,7 +181,7 @@
 
                             <!--name and size section-->
                             <div class="flex flex-col justify-center">
-                                <p class="text-white text-base font-medium leading-normal line-clamp-1"><%=file.filename%></p>
+                                <p class="text-white text-base font-medium leading-normal line-clamp-1 file-name"><%=file.filename%></p>
                                 <p class="text-[#9dabb8] text-sm font-normal leading-normal">
                                     <% if (file.size >= 1024 * 1024) { %>
                                         <%= (file.size / (1024 * 1024)).toFixed(2) %> MB
@@ -215,9 +215,7 @@
                         </button>
                         <div class="flex items-center gap-2 shrink-0">
                             <a href="<%=file.url.replace('/upload/','/upload/fl_attachment/') %>" target="_blank" class="text-white flex size-7 items-center justify-center hover:text-green-500" title="Download File">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M216,176V216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V176a8,8,0,0,1,8-8H88v32H168V168h40A8,8,0,0,1,216,176ZM128,112l40,40H136v48H120V152H88Z"></path>
-                                </svg>
+                                <svg height="32px" version="1.1" viewBox="0 0 32 32" width="32px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#157EFB" id="icon-129-cloud-download"><path d="M15,27.25 L11.75,24 L11,24.75 L15.5,29.25 L20,24.75 L19.25,24 L16,27.25 L16,16 L15,16 L15,27.25 L15,27.25 Z M14,22 L7.00281647,22 C4.79793835,22 3,20.209139 3,18 C3,16.1046097 4.32460991,14.5117359 6.10100919,14.1021544 L6.10100919,14.1021544 C6.03467626,13.7448817 6,13.3764904 6,13 C6,9.68629134 8.68629134,7 12,7 C14.6154416,7 16.8400262,8.67345685 17.6614243,11.0080411 C18.435776,10.3778124 19.4237666,10 20.5,10 C22.8583427,10 24.7929639,11.814166 24.9844379,14.1230721 L24.9844379,14.1230721 C26.7144917,14.5630972 28,16.1320162 28,18 C28,20.2046438 26.207878,22 23.9971835,22 L17,22 L17,23 L24.0005601,23 C26.7616745,23 29,20.7558048 29,18 C29,15.9035809 27.7132907,14.1085075 25.8828633,13.3655101 L25.8828633,13.3655101 C25.3600217,10.8722494 23.1486546,9 20.5,9 C19.6371017,9 18.8206159,9.19871575 18.0938083,9.55288165 C16.8911816,7.43144875 14.6127573,6 12,6 C8.13400656,6 5,9.13400656 5,13 C5,13.1381509 5.00400207,13.275367 5.01189661,13.4115388 L5.01189661,13.4115388 C3.23965876,14.1816085 2,15.9491311 2,18 C2,20.7614237 4.23249418,23 6.99943992,23 L14,23 L14,22 L14,22 L14,22 Z" id="cloud-download"/></g></g></svg>
                             </a>
 
                             <button onclick="deleteFile(<%=file.file_id%>)" class="text-white flex size-7 items-center justify-center hover:text-red-500" title="Delete File">
