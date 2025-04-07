@@ -11,6 +11,8 @@ folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
         const files = await dbClient.showFiles(null); // No folder ID for root level files (if you allow this)
 
         res.render('files', {
+            layout: './layouts/main',
+            title: 'Files',
             folders: subfolders,
             files: files,
             currentFolderId: null,
@@ -26,7 +28,6 @@ folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
 folderRouter.get('/folders/:folderId',async (req, res) => {
     let folderId = req.params.folderId;
     folderId = parseInt(folderId)
-    console.log('folder id is : ',folderId,typeof(folderId))
     try {
         //get the current folder
         const currentFolder = await dbClient.getParentFolderWithId(folderId);
@@ -51,6 +52,8 @@ folderRouter.get('/folders/:folderId',async (req, res) => {
         }
 
         res.render('files', {
+            layout: './layouts/main',
+            title: 'Files',
             folders: subFolders,
             files: files,
             currentFolderId: folderId,
