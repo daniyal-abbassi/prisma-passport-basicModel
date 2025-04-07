@@ -51,7 +51,7 @@ input[type="file"] {
 .submit-btn {
     width: 100%;
     padding: 12px;
-    background-color: #0e639c;
+    background-color: #1980e6
     color: white;
     border: none;
     border-radius: 4px;
@@ -61,5 +61,39 @@ input[type="file"] {
 }
 
 .submit-btn:hover {
-    background-color: #1177bb;
+    background-color: #1980e6;
+}
+
+.folder-container:hover {
+    border: 1px solid #1980e6;
+    border-radius: 10px;
+    box-shadow: 8px 0px 15px 0px #1980e6;
+    transform: scale(1.02);
+    transition: transform 0.4s ease;
+}
+.folder-name:hover {
+    cursor: pointer;
+    color:#1980e6;
+}
+.files-container:hover {
+    border: 1px solid #10B981;
+    border-radius: 10px;
+    box-shadow: 8px 0px 15px 0px #10B981;
+    transform: scale(1.02);
+    transition: transform 0.4s ease;
+}
+.file-name:hover {
+    cursor: pointer;
+    color: #10B981;
+}
+#createFolderBtn {
+    background-color: #1980e6;
+}
+#createFolderBtn:hover, #uploadBtn:hover {
+    border: 1px solid #fff;
+    box-shadow: 2px 0px 5px 2px #e0e0e0;
+
+}
+#uploadBtn {
+    background-color: #10B981;
 }
