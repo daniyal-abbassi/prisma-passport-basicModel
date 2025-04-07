@@ -70,7 +70,7 @@
                     <label class="flex gap-x-3 py-3 flex-row">
                         <input type="checkbox"
                             class="h-5 w-5 rounded border-[#3c4753] border-2 bg-transparent text-[#1980e6] checked:bg-[#1980e6] checked:border-[#1980e6] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-[#3c4753] focus:outline-none"
-                            checked="" />
+                             />
                         <p class="text-white text-base font-normal leading-normal">This is just a silly checkbox</p>
                     </label>
                 </div>
@@ -80,6 +80,13 @@
                         type="submit" value="Create account">
                     </input>
                 </div>
+                <%if(errorMsgs.error && errorMsgs.error.length>0) {%>
+                    <div class="px-4 py-3 bg-red-700 rounded-md text-white mb-4">
+                        <%errorMsgs.error.forEach(err=>{%>
+                           <%=err%>
+                       <%})%>
+                    </div>
+                <%}%>
             </form>
         </div>
         <footer class="flex justify-center">
@@ -90,15 +97,6 @@
             </div>
         </footer>
     </div>
-    <%if(errorMsgs.error && errorMsgs.error.length>0) {%>
-        <div class="error-messages">
-            <%errorMsgs.error.forEach(err=>{%>
-                <p>
-                    <%=err%>
-                </p>
-                <%})%>
-        </div>
-        <%}%>
 </div>
 
 

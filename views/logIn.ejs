@@ -41,6 +41,7 @@
             </div>
         </header>
         <div class="px-40 flex flex-1 justify-center py-5">
+            
             <form action="/log-in" method="POST" id="form-div"
                 class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
                 <h1 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">
@@ -76,6 +77,13 @@
                         type="submit" value="Login">
                     </input>
                 </div>
+                <%if(errorMsgs.error && errorMsgs.error.length>0) {%>
+                    <div class="px-4 py-3 bg-red-700 rounded-md text-white mb-4">
+                        <%errorMsgs.error.forEach(err=>{%>
+                           <%=err%>
+                       <%})%>
+                    </div>
+                <%}%>
             </form>
         </div>
         <footer class="flex justify-center">
@@ -86,15 +94,7 @@
             </div>
         </footer>
     </div>
-    <%if(errorMsgs.error && errorMsgs.error.length>0) {%>
-        <div class="error-messages">
-            <%errorMsgs.error.forEach(err=>{%>
-                <p>
-                    <%=err%>
-                </p>
-                <%})%>
-        </div>
-        <%}%>
+    
 </div>
 
 
