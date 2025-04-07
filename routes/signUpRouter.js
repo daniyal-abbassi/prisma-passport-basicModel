@@ -4,7 +4,7 @@ const signUpRouter = Router();
 
 signUpRouter.get('/', (req, res) => {
     const errorMessages = { error: req.flash('error') }
-    res.render('signUp', { errorMsgs: errorMessages })
+    res.render('signUp', { layout: './layouts/main',title: 'Sign Up',errorMsgs: errorMessages })
 })
 
 signUpRouter.post('/',  (req, res,next) => {
@@ -13,7 +13,7 @@ signUpRouter.post('/',  (req, res,next) => {
 
     if (password !== confirmPassword) {
         errorMsgs.error.push('Passwords do not match.');
-        return res.render('signUp', { errorMsgs: errorMsgs });
+        return res.render('signUp', {layout: './layouts/main',title: 'Sign Up', errorMsgs: errorMsgs });
     }
     next();
 }, passport.authenticate('local-signUp', {
