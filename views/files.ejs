@@ -12,28 +12,13 @@
     <%}%>
 </div>
 
-<div>
-    <button id="createFolderBtn">Create Folder</button>
+<!--
     <a href="/upload<%=currentFolderId!==null?'?folderId='+currentFolderId:''%>"</a><button>Upload File</button></a>
-</div>
 
-<h2>folders</h2>
-<div id="folderList">
-    <%if(folders&&folders.length>0) {%>
-        <%folders.forEach(folder=>{%>
-            <li class="folder-item">
-                <span class="item-name"><%=folder.name%></span>
-                <div class="item-buttons">
-                    <button onclick="openFolder(<%=folder.folder_id%>)">Open</button>
-                    <button onclick="editFolder(<%=folder.folder_id%>, '<%=folder.name%>')">Edit</button>
-                    <button onclick="deleteFolder(<%=folder.folder_id%>)">Delete</button>
-                </div>
-            </li>
-        <%})%>
-    <%} else {%>
-        <p>No subfolder here.</p>
-    <%}%>
-</div>
+
+
+             
+ 
 
 <h2>Files</h2>
 <div class="fileList">
@@ -51,6 +36,178 @@
         <p>No file here.</p>
     <%}%>
 </div>
+
+-->
+
+    <div class="relative flex size-full min-h-screen flex-col bg-[#111418] dark group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#293038] px-10 py-3">
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Files</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            
+            <button
+              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#293038] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+            >
+              <span class="truncate">Log out</span>
+            </button>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://cdn.usegalileo.ai/sdxl10/7b79c9c5-1810-4ce3-9500-7ced82ad3ae2.png");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72">Files</p></div>
+             <!--search section-->
+            <div class="px-4 py-3">
+              <label class="flex flex-col min-w-40 h-12 w-full">
+                <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
+                    <!--magnifies section-->
+                  <div
+                    class="text-[#9dabb8] flex border-none bg-[#293038] items-center justify-center pl-4 rounded-l-xl border-r-0"
+                    data-icon="MagnifyingGlass"
+                    data-size="24px"
+                    data-weight="regular"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <!--search files section-->
+                  <input
+                    placeholder="Search files"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#293038] focus:border-none h-full placeholder:text-[#9dabb8] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    value=""
+                  />
+                </div>
+              </label>
+            </div>
+            <!--label parts section-->
+            <div class="flex gap-3 p-3 flex-wrap pr-4">
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">All files</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Recent</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Images</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Videos</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Docs</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Audio</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Zipped</p>
+              </div>
+              <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#293038] pl-4 pr-4">
+                <p class="text-white text-sm font-medium leading-normal">Other</p>
+              </div>
+            </div>
+
+            <!--folders section-->
+            <%if(folders&&folders.length>0) {%>
+                <%folders.forEach(folder=>{%>                                       
+                    <div class="flex items-center gap-4 bg-[#111418] px-4 min-h-[72px] py-2 justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="text-white flex items-center justify-center rounded-lg bg-[#293038] shrink-0 size-12" data-icon="Folder" data-size="24px" data-weight="regular">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path
+                                      d="M216,72H131.31L104,44.69A15.86,15.86,0,0,0,92.69,40H40A16,16,0,0,0,24,56V200.62A15.4,15.4,0,0,0,39.38,216H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72ZM40,56H92.69l16,16H40ZM216,200H40V88H216Z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-white text-base font-medium leading-normal line-clamp-1"><%=folder.name%></p>
+                                <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2">x files</p>
+                            </div>
+                        </div>
+                        <!--open, edit and delete a folder -->
+                        <div class="flex items-center gap-2 shrink-0">
+                            <!--open icon-->
+                            <button onclick="openFolder(<%=folder.folder_id%>)" class="text-white flex size-7 items-center justify-center hover:text-blue-500" title="Open Folder">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M224.49,115.51l-72-72a8,8,0,0,0-11.32,11.32L200.69,112H40a8,8,0,0,0,0,16H200.69l-59.52,64.17a8,8,0,0,0,11.32,11.32l72-72A8,8,0,0,0,224.49,115.51Z"></path>
+                                </svg>
+                            </button>
+                            <!--edit icon-->
+                            <button onclick="editFolder(<%=folder.folder_id%>, '<%=folder.name%>')" class="text-white flex size-7 items-center justify-center hover:text-yellow-500" title="Edit Folder">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M227.25,30.75a16,16,0,0,0-22.63,0L37.63,197.75a8,8,0,0,0-1.32,3.53l-8,48a8,8,0,0,0,9.19,9.19l48-8a8,8,0,0,0,3.53-1.32L227.25,53.38A16,16,0,0,0,227.25,30.75ZM52.76,216l4.61-27.63L194.87,71.51l-27.63,4.61Z"></path>
+                                </svg>
+                            </button>
+                            <!--delete icon-->
+                            <button onclick="deleteFolder(<%=folder.folder_id%>)" class="text-white flex size-7 items-center justify-center hover:text-red-500" title="Delete Folder">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,184a8,8,0,0,1-8-8V88a8,8,0,0,1,16,0v88A8,8,0,0,1,96,184Zm64,0a8,8,0,0,1-8-8V88a8,8,0,0,1,16,0v88A8,8,0,0,1,160,184ZM152,48H104V40a8,8,0,0,1,8-8h32a8,8,0,0,1,8,8Z"></path>
+                                </svg>
+                            </button>
+
+                        </div>
+                    </div>                
+                <%})%>
+            <%} else {%>
+                <p>No subfolder here.</p>
+            <%}%>
+           
+            <!--new folder button-->
+            <div class="flex px-4 py-3">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#293038] text-white gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]"
+                id="createFolderBtn"
+              >
+                <div class="text-white" data-icon="Folder" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M216,72H131.31L104,44.69A15.86,15.86,0,0,0,92.69,40H40A16,16,0,0,0,24,56V200.62A15.4,15.4,0,0,0,39.38,216H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72ZM40,56H92.69l16,16H40ZM216,200H40V88H216Z"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="truncate">New folder</span>
+              </button>
+            </div>
+
+            <!--upload button-->
+            <div class="flex px-4 py-3">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#293038] text-white gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]"
+                id="uploadBtn"
+              >
+                <div class="text-white" data-icon="ArrowUp" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="truncate">Upload</span>
+              </button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
 <script>
@@ -140,4 +297,7 @@
         } //if
     }
 
+    document.getElementById('uploadBtn').addEventListener('click',()=>{
+        window.location.href="/upload<%=currentFolderId!==null?'?folderId='+currentFolderId:''%>"
+    })
 </script>
