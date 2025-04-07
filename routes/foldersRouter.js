@@ -24,7 +24,9 @@ folderRouter.get('/folders',ensureLoggedIn,async (req, res) => {
 
 
 folderRouter.get('/folders/:folderId',async (req, res) => {
-    const { folderId } = req.params;
+    let folderId = req.params.folderId;
+    folderId = parseInt(folderId)
+    console.log('folder id is : ',folderId,typeof(folderId))
     try {
         //get the current folder
         const currentFolder = await dbClient.getParentFolderWithId(folderId);
@@ -41,7 +43,10 @@ folderRouter.get('/folders/:folderId',async (req, res) => {
             let ancestor = currentFolder;
             while (ancestor) {
                 currentPath.unshift({ id: ancestor.folder_id, name: ancestor.name });
-                ancestor = await File.getParentFolderWithId(ancestor.parent_id);
+                if(ancestor.parent_id===null) {
+                    break
+                }
+                ancestor = await dbClient.getParentFolderWithId(ancestor.parent_id);
             }
         }
 

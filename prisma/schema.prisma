@@ -22,7 +22,7 @@ model User {
   files    File[]
   folders  Folder[]
 
-  @@map("public.users")
+  @@map("users")
 }
 
 // folder model
@@ -37,7 +37,7 @@ model Folder {
   parent     Folder?  @relation("Subfolders", fields: [parent_id], references: [folder_id], onDelete: Cascade, onUpdate: NoAction)
   subfolders Folder[] @relation("Subfolders")
 
-  @@map("public.folders")
+  @@map("folders")
 }
 
 // files model
@@ -47,12 +47,12 @@ model File {
   url       String  @db.Text
   type      String? @db.Text
   date      String?
-  size      String?
+  size      Int?
   //relations
   folder_id Int?
   user_id   Int?
   folder Folder? @relation(fields: [folder_id],references: [folder_id], onDelete: Cascade)
   user      User?   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
-  @@map("public.files")
+  @@map("files")
 }

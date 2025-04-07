@@ -5,10 +5,11 @@ const prisma = require('./client');
 const dbClient = {
     // FILE QUERIES
     showFiles: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId)
         try {
             const files = await prisma.file.findMany({
                 where: {
-                    folder_id: folderId===null ? null: folderId
+                    folder_id: parsedFolderId
                 },
             });
             return files;
@@ -18,6 +19,8 @@ const dbClient = {
         } 
     },
     saveFile: async(filename,url,type ,date ,size ,folderId,userId)=>{
+        const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId);
+        const parsedUserId = parseInt(userId);
         try {
             await prisma.file.create({
                 data: {
@@ -26,8 +29,8 @@ const dbClient = {
                     type,
                     date,
                     size,
-                    folder_id: folderId===null?null:folderId,
-                    user_id: userId, 
+                    folder_id: parsedFolderId,
+                    user_id: parsedUserId, 
                 },
             })
         } catch (error) {
@@ -36,10 +39,11 @@ const dbClient = {
         } 
     },
     deleteFile: async(fileId)=>{
+        const parsedFileId = parseInt(fileId);
         try {
             await prisma.file.delete({
                 where: {
-                    file_id: fileId,
+                    file_id: parsedFileId,
                 }
             })
         } catch (error) {
@@ -65,10 +69,11 @@ const dbClient = {
         } 
     },
     getParentFolderWithId: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'||folderId===null||folderId==='') ? null: parseInt(folderId)
         try {
             const currentFolder = await prisma.folder.findFirst({
                 where: {
-                    folder_id: folderId,
+                    folder_id: parsedFolderId,
                 },
             })
             return currentFolder;
@@ -78,10 +83,11 @@ const dbClient = {
         } 
     },
     getSubFoldersWithId: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'||folderId===null) ? null:parseInt(folderId);
         try {
             const subFolders = await prisma.folder.findMany({
                 where: {
-                    parent_id: folderId,
+                    parent_id: parsedFolderId,
                 },
                 orderBy: {
                     name: 'asc'
@@ -93,13 +99,15 @@ const dbClient = {
             throw error;
         } 
     },
-    createFolder: async(name,parantId,userId)=>{
+    createFolder: async(name,parentId,userId)=>{
+        const parsedParentId = (parentId===null||parentId==='null'||parentId==='')?null:parseInt(parentId)
+        const parsedUserId = parseInt(userId);
         try {
             await prisma.folder.create({
                 data: {
                     name,
-                    parent_id: parantId===null ? null:parantId,
-                    user_id: userId,
+                    parent_id: parsedParentId,
+                    user_id: parsedUserId,
                 }
             })
         } catch (error) {
@@ -108,10 +116,11 @@ const dbClient = {
         } 
     },
     editFolderNameById: async(newName,folderId)=>{
+        const parsedFolderId = parseInt(folderId);
         try {
             await prisma.folder.update({
                 where: {
-                    folder_id: folderId,
+                    folder_id: parsedFolderId,
                 },
                 data: {
                     name: newName,
@@ -123,10 +132,11 @@ const dbClient = {
         } 
     },
     deleteFolderWithId: async(folderId)=>{
+        const parsedFolderId = parseInt(folderId);
         try {
             await prisma.folder.delete({
                 where: {
-                    folder_id: folderId,
+                    folder_id: parsedFolderId,
                 },
             })
         } catch (error) {
@@ -164,10 +174,11 @@ const dbClient = {
         } 
     },
     findUserById: async(userId)=>{
+        const parsedUserId = parseInt(userId);
         try {
             const user = await prisma.user.findFirst({
                 where: {
-                    user_id: userId,
+                    user_id: parsedUserId,
                 }
             });
             return user;
