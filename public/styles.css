@@ -97,3 +97,6 @@ input[type="file"] {
 #uploadBtn {
     background-color: #10B981;
 }
+.log-out:hover {
+    background-color: rgba(231, 33, 33, 0.705);
+}

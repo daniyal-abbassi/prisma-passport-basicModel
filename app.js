@@ -43,9 +43,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+app.get('/log-out',(req,res)=>{
+    req.logout(err=>{
+        if(err) {
+            return next(err)
+        }
+        res.redirect('/log-in')
+    })
+})
 app.use('/upload', uploadRouter)
 app.use('/', folderRouter)
 app.use('/sign-up', signUpRouter)
 app.use('/log-in', logInRouter)
-
 app.listen(3000, () => console.log('app is runnig on port: ', 3000))
