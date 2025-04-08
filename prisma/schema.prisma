@@ -29,6 +29,7 @@ model User {
 model Folder {
   folder_id  Int      @id @default(autoincrement())
   name       String   @db.Text
+  share Boolean @default(false)
   //relations
   parent_id  Int?
   user_id    Int?
