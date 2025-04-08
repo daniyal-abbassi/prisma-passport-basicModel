@@ -100,3 +100,6 @@ input[type="file"] {
 .log-out:hover {
     background-color: rgba(231, 33, 33, 0.705);
 }
+.log-sig-form {
+    display: flex !important;
+}
