@@ -13,6 +13,7 @@ const uploadRouter = require('./routes/uploadRouter');
 const folderRouter = require('./routes/foldersRouter');
 const signUpRouter = require('./routes/signUpRouter');
 const logInRouter = require('./routes/logInRouter');
+const publicRouter = require('./routes/publicRouter');
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
     cloud_name: 'dajzulqra',
@@ -58,5 +59,5 @@ app.use('/upload', uploadRouter)
 app.get('/',(req,res)=>{
     res.redirect('/sign-up')
 })
-
+app.use('/public',publicRouter)
 app.listen(3000, () => console.log('app is runnig on port: ', 3000))
