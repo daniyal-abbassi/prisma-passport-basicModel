@@ -26,7 +26,7 @@ folderRouter.get('/',ensureLoggedIn,async (req, res) => {
 });
 
 
-folderRouter.get('/folders/:folderId',ensureLoggedIn,async (req, res) => {
+folderRouter.get('/:folderId',ensureLoggedIn,async (req, res) => {
     let folderId = req.params.folderId;
     folderId = parseInt(folderId);
     const { user_id } = req.user;
@@ -67,8 +67,7 @@ folderRouter.get('/folders/:folderId',ensureLoggedIn,async (req, res) => {
     }
 })
 // create a folder
-folderRouter.post('/folders',async(req,res)=>{
-    console.log('in the post/folders,create folder',req.user)
+folderRouter.post('/',async(req,res)=>{
     try {
         let {name,parentId} = req.body;
         //get user_id
@@ -84,7 +83,7 @@ folderRouter.post('/folders',async(req,res)=>{
     }
 })
 // edit a folder's name 
-folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
+folderRouter.post('/:folderId/edit',async(req,res)=>{
     try {
         const {name} = req.body;
         const folderId = req.params.folderId;
@@ -97,7 +96,7 @@ folderRouter.post('/folders/:folderId/edit',async(req,res)=>{
     }
 })
 // delete folder router
-folderRouter.post('/folders/:folderId/delete',async(req,res)=>{
+folderRouter.post('/:folderId/delete',async(req,res)=>{
     try {
         const {folderId} = req.params;
         await dbClient.deleteFolderWithId(folderId);
