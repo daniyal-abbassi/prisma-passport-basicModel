@@ -106,7 +106,16 @@ folderRouter.post('/:folderId/delete',async(req,res)=>{
         res.status(500).send('Error deleting folder');
     }
 })
-
+//share folder router
+folderRouter.post('/:folderId/share',ensureLoggedIn,async(req,res)=>{
+    try {
+        // should give a shara link for this folderId with public path
+        console.log('here is your share link sir: ',`https://domainName/public${req.originalUrl}`)
+    } catch (error) {
+        console.error('Error share folder:', error);
+        res.status(500).send('Error sharing folder');
+    }
+})
 // deletin a file
 folderRouter.post('/files/:fileId/delete',ensureLoggedIn,async(req,res)=>{
     try {
