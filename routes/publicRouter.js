@@ -5,16 +5,18 @@ const dbClient = require('../models/dbClient');
 publicRouter.get('/:folderId/share', async (req, res) => {
     try {
         const folderId = req.params.folderId;
-        const {user_id} = req.user;
+        let sharedFolder = await dbClient.sharedFolder(folderId);
+        
+        
         //get the current folder
-        const currentFolder = await dbClient.getParentFolderWithId(folderId, user_id);
+        const currentFolder = await dbClient.getSharedParentFolderWithId(folderId);
 
         //get subfolders in parant folder
-        const subFolders = await dbClient.getSubFoldersWithId(folderId, user_id);
+        const subFolders = await dbClient.getSharedSubFoldersWithId(folderId);
 
         //get the files inside this folder
-        const files = await dbClient.showFiles(folderId, user_id);
-
+        const files = await dbClient.showSharedFiles(folderId);
+        console.log('folderrouter.post: should set share to ture:  ',currentFolder)
         //folder paths array - contains of an object{id,name}
         let currentPath = [];
         if (currentFolder) {
@@ -24,7 +26,7 @@ publicRouter.get('/:folderId/share', async (req, res) => {
                 if (ancestor.parent_id === null) {
                     break
                 }
-                ancestor = await dbClient.getParentFolderWithId(ancestor.parent_id, user_id);
+                ancestor = await dbClient.getSharedParentFolderWithId(ancestor.parent_id, share=true);
             }
         }
 

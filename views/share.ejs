@@ -82,7 +82,7 @@
                   <ol class="inline-flex items-center space-x-1 md:space-x-3">
                       <li class="inline-flex items-center">
                         <!--back to path folder - main folder i mean-->
-                          <a href='/<%=rootId%>/share' class="inline-flex items-center text-white hover:text-blue-400">
+                          <a href='/public/<%=rootId%>/share' class="inline-flex items-center text-white hover:text-blue-400">
                               <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                               Home
                           </a>
@@ -93,7 +93,7 @@
                               <li>
                                   <div class="flex items-center">
                                       <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                      <a href="/folders/<%=path.id%>" class="ml-1 text-white hover:text-blue-400"><%=path.name%></a>
+                                      <a href="/public/<%=path.id%>/share" class="ml-1 text-white hover:text-blue-400"><%=path.name%></a>
                                   </div>
                               </li>
                               <%}%>
@@ -118,7 +118,7 @@
                           </div>
                       </div>
                       
-                      <!--open, edit and delete a folder -->
+                      <!--open a folder -->
                       <div class="flex items-center gap-2 shrink-0">
                          <!--open icon-->
                           <button onclick="openFolder(<%=folder.folder_id%>)" class="text-white flex size-7 items-center justify-center hover:text-blue-500" title="Open Folder">
@@ -220,8 +220,7 @@
 
   //open folder function
   function openFolder(folderId) {
-      window.location.href=`/folders/${folderId}`;
-      console.log('clicked')
+      window.location.href=`/public/${folderId}/share`;
   }
   
 </script>
