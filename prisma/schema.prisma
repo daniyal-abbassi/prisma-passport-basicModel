@@ -46,6 +46,7 @@ model File {
   file_id   Int     @id @default(autoincrement())
   filename  String  @db.VarChar(255)
   url       String  @db.Text
+  shareURL  String  @db.Text
   type      String? @db.Text
   date      String?
   size      Int?
