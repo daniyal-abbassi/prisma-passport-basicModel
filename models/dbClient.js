@@ -65,7 +65,7 @@ const dbClient = {
             throw error;
         } 
     },
-    saveFile: async(filename,url,type ,date ,size ,folderId,userId)=>{
+    saveFile: async(filename,url,shareUrl,type ,date ,size ,folderId,userId)=>{
         const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId);
         const parsedUserId = parseInt(userId);
         try {
@@ -73,6 +73,7 @@ const dbClient = {
                 data: {
                     filename,
                     url,
+                    shareURL: shareUrl,
                     type,
                     date,
                     size,
@@ -161,12 +162,7 @@ const dbClient = {
                     folder_id: parsedFolderId,
                     share: true,
                 },
-                // select: {
-                //     folder_id: true,
-                //     name: true,
-                //     share: true,
-                //     parent_id: true, 
-                // },
+         
                 omit: {user_id: true}
             })
             return sharedfolder;
@@ -206,12 +202,7 @@ const dbClient = {
                 orderBy: {
                     name: 'asc'
                 },
-                // select: {
-                //     folder_id: true,
-                //     name: true,
-                //     share: true,
-                //     parent_id: true, 
-                // },
+            
                 omit: {user_id: true}
             })
             return subFolders;
