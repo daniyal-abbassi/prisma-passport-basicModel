@@ -10,12 +10,12 @@
           <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Files</h2>
         </div>
         <div class="flex flex-1 justify-end gap-8">
-          
-          <a href="/log-out">
+          <!--go to project link-->
+          <a href="http://localhost:3000">
               <button
             class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#293038] text-white text-sm font-bold leading-normal tracking-[0.015em] log-out"
           >
-            <span class="truncate">Log out</span>
+            <span class="truncate">Project</span>
           </button>
 
           </a>
@@ -43,14 +43,14 @@
       </header>
       <div class="px-40 flex flex-1 justify-center py-5">
         <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72 files-title">Files</p></div>
+          <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72 files-title">Shared Folder</p></div>
 
-           <!--search section-->
+           <!--search section
           <div class="px-4 py-3">
             <label class="flex flex-col min-w-40 h-12 w-full">
               <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
 
-                  <!--magnifies section-->
+                  magnifies section
                 <div
                   class="text-[#9dabb8] flex border-none bg-[#293038] items-center justify-center pl-4 rounded-l-xl border-r-0"
                   data-icon="MagnifyingGlass"
@@ -64,7 +64,7 @@
                   </svg>
                 </div>
 
-                <!--search files section-->
+                search files section
                 <input
                   placeholder="Search files"
                   class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#293038] focus:border-none h-full placeholder:text-[#9dabb8] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
@@ -73,7 +73,7 @@
               </div>
             </label>
           </div>
-
+        -->
          
 
            <!--breadcrumb section-->
@@ -81,7 +81,8 @@
               <nav class="flex items-center text-white text-sm" aria-label="Breadcrumb">
                   <ol class="inline-flex items-center space-x-1 md:space-x-3">
                       <li class="inline-flex items-center">
-                          <a href="/folders" class="inline-flex items-center text-white hover:text-blue-400">
+                        <!--back to path folder - main folder i mean-->
+                          <a href='/<%=rootId%>/share' class="inline-flex items-center text-white hover:text-blue-400">
                               <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                               Home
                           </a>
@@ -116,7 +117,6 @@
                               <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2">Cloud Folder</p>
                           </div>
                       </div>
-                      <!--share link section-->
                       
                       <!--open, edit and delete a folder -->
                       <div class="flex items-center gap-2 shrink-0">

@@ -110,7 +110,10 @@ folderRouter.post('/:folderId/delete',async(req,res)=>{
 folderRouter.post('/:folderId/share',ensureLoggedIn,async(req,res)=>{
     try {
         // should give a shara link for this folderId with public path
-        console.log('here is your share link sir: ',`https://domainName/public${req.originalUrl}`)
+        console.log('folder url is: ',req.url)
+        console.log(req.headers.origin)
+        console.log(`final link will be: \n -->  ${req.headers.origin}/public${req.url}`)
+        res.json({url: `${req.headers.origin}/public${req.url}`,statusbar: 'success'})
     } catch (error) {
         console.error('Error share folder:', error);
         res.status(500).send('Error sharing folder');

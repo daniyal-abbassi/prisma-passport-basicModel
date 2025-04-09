@@ -116,6 +116,10 @@
                                 <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2">Cloud Folder</p>
                             </div>
                         </div>
+                        <!--share link section-->
+                        <div class="flex flex-col justify-center">
+                            <a target="_blank" id="share-link" class="text-white text-base font-medium leading-normal line-clamp-1 file-name"></a> 
+                        </div>
                         <!--open, edit and delete a folder -->
                         <div class="flex items-center gap-2 shrink-0">
                             <!--share icon-->
@@ -349,15 +353,16 @@
                 },
                 body: `folderId=${encodeURIComponent(folderId)}`,
             })
-            .then(response=>{
-                if (response.ok) {
-                    window.location.reload();
-                } else {
-                    console.error('Failed to share folder: ',response)
+            .then(res=>{
+                if(!res.ok) {
+                    console.error('Failed to share folder: ',res)
                     alert('FAILED TO SHARE FOLDER!!!')
                 }
-            });
-        
+                return res.json();
+            }).then(response=>{
+                document.getElementById('share-link').innerText=response.url;
+                document.getElementById('share-link').setAttribute('href',response.url);
+            })
     }
     // delete file function
     function deleteFile(fileId) {
