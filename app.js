@@ -14,6 +14,7 @@ const folderRouter = require('./routes/foldersRouter');
 const signUpRouter = require('./routes/signUpRouter');
 const logInRouter = require('./routes/logInRouter');
 const publicRouter = require('./routes/publicRouter');
+const searchRouter = require('./routes/searchRouter');
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
     cloud_name: 'dajzulqra',
@@ -60,4 +61,5 @@ app.get('/',(req,res)=>{
     res.redirect('/sign-up')
 })
 app.use('/public',publicRouter)
+app.use('/search',searchRouter)
 app.listen(3000, () => console.log('app is runnig on port: ', 3000))
