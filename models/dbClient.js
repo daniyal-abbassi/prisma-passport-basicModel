@@ -13,6 +13,32 @@ const dbClient = {
                     folder_id: parsedFolderId,
                     user_id: parsedUserId,
                 },
+                // select: {
+                //     date: true,
+                //     file_id: true,
+                //     filename: true,
+                //     size: true,
+                //     type: true,
+                //     url: true,
+                //     folder_id: true
+                // },
+                omit: {user_id: true}
+            });
+            return files;
+        } catch (error) {
+            console.error('ERROR IN READING FILES', error);
+            throw error;
+        } 
+    },
+    //share version
+    showSharedFiles: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId);
+        try {
+            const files = await prisma.file.findMany({
+                where: {
+                    folder_id: parsedFolderId,
+                },
+              
             });
             return files;
         } catch (error) {
@@ -54,6 +80,25 @@ const dbClient = {
         } 
     },
     // FOLDER QUERIES
+    sharedFolder: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'||folderId===null||folderId==='') ? null: parseInt(folderId);
+        try {
+            const sharedfolder = await prisma.folder.update({
+                where: {
+                    folder_id: parsedFolderId,
+                },
+                data: {
+                    share: true,
+                }
+                
+            })
+            return sharedfolder;
+        } catch (error) {
+            console.error('ERROR IN MAKE SHARE TRUE', error);
+            throw error;
+        } 
+    },
+
     showRootFolder: async(userId)=>{
         const parsedUserId = parseInt(userId);
         try {
@@ -76,15 +121,38 @@ const dbClient = {
         const parsedFolderId = (folderId==='null'||folderId===null||folderId==='') ? null: parseInt(folderId);
         const parsedUserId = parseInt(userId)
         try {
-            const currentFolder = await prisma.folder.findFirst({
+            const sharedfolder = await prisma.folder.findFirst({
                 where: {
                     folder_id: parsedFolderId,
                     user_id: parsedUserId,
                 },
             })
-            return currentFolder;
+            return sharedfolder;
         } catch (error) {
             console.error('ERROR IN GET PARENT FOLDER WITH ID', error);
+            throw error;
+        } 
+    },
+    //share version
+    getSharedParentFolderWithId: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'||folderId===null||folderId==='') ? null: parseInt(folderId);
+        try {
+            const sharedfolder = await prisma.folder.findFirst({
+                where: {
+                    folder_id: parsedFolderId,
+                    share: true,
+                },
+                // select: {
+                //     folder_id: true,
+                //     name: true,
+                //     share: true,
+                //     parent_id: true, 
+                // },
+                omit: {user_id: true}
+            })
+            return sharedfolder;
+        } catch (error) {
+            console.error('ERROR IN GET SHARE PARENT FOLDER WITH ID', error);
             throw error;
         } 
     },
@@ -100,6 +168,32 @@ const dbClient = {
                 orderBy: {
                     name: 'asc'
                 }
+            })
+            return subFolders;
+        } catch (error) {
+            console.error('ERROR IN GET SUB-FOLDER WITH ID', error);
+            throw error;
+        } 
+    },
+    //share version
+    getSharedSubFoldersWithId: async(folderId)=>{
+        const parsedFolderId = (folderId==='null'||folderId===null) ? null:parseInt(folderId);
+        try {
+            const subFolders = await prisma.folder.findMany({
+                where: {
+                    parent_id: parsedFolderId,
+                    
+                },
+                orderBy: {
+                    name: 'asc'
+                },
+                // select: {
+                //     folder_id: true,
+                //     name: true,
+                //     share: true,
+                //     parent_id: true, 
+                // },
+                omit: {user_id: true}
             })
             return subFolders;
         } catch (error) {
