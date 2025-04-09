@@ -103,3 +103,6 @@ input[type="file"] {
 .log-sig-form {
     display: flex !important;
 }
+.share-link  {
+    cursor: pointer !important;
+}
