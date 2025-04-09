@@ -204,7 +204,7 @@
                             <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2"><%= new Date(file.date).toLocaleDateString()%></p>
                         </div>
                         <!--donwload,share and delete section-->
-                        <button style="cursor: pointer;" onclick="shareFile('<%=file.file_id%>')" class="text-white flex size-7 items-center justify-center hover:text-indigo-500" title="Share File">
+                        <button style="cursor: pointer;" onclick="alert('File Public URL:\n <%=file.shareURL%>')" class="text-white flex size-7 items-center justify-center hover:text-indigo-500" title="Share File">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="18" cy="5" r="3"></circle>
                                 <circle cx="6" cy="12" r="3"></circle>

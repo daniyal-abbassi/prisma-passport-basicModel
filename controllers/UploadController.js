@@ -36,9 +36,10 @@ const uploadController = {
 
                     //get the url
                     const fileUrl = result.secure_url;
-
+                    //public url
+                    const shareURL = result.url;
                     //handle null folderId in prisma model
-                    await dbClient.saveFile(req.body.name, fileUrl, format, created_at, bytes, folderId, user_id)
+                    await dbClient.saveFile(req.body.name, fileUrl,shareURL, format, created_at, bytes, folderId, user_id)
                     res.redirect(`/folders/${folderId}`)
 
                 }
