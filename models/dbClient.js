@@ -3,6 +3,33 @@ const prisma = require('./client');
 
 // QUERIES FOR FILE, FOLDER AND USER MODEL
 const dbClient = {
+    //GENERAL
+    searchAllFolders: async(name)=>{
+        try {
+            const folders = await prisma.folder.findMany({
+                where: {
+                    name: {contains: name}
+                }
+            });
+            return folders;
+        } catch (error) {
+            console.error('ERROR SEARCHING', error);
+            throw error;
+        }
+    },  
+    searchAllFiles: async(name)=>{
+        try {
+            const files = await prisma.file.findMany({
+                where: {
+                    filename: {contains: name}
+                }
+            })
+            return files;
+        } catch (error) {
+            console.error('ERROR SEARCHING', error);
+            throw error;
+        }
+    },  
     // FILE QUERIES
     showFiles: async(folderId,userId)=>{
         const parsedFolderId = (folderId==='null'|| folderId==='') ? null : parseInt(folderId);
@@ -13,15 +40,7 @@ const dbClient = {
                     folder_id: parsedFolderId,
                     user_id: parsedUserId,
                 },
-                // select: {
-                //     date: true,
-                //     file_id: true,
-                //     filename: true,
-                //     size: true,
-                //     type: true,
-                //     url: true,
-                //     folder_id: true
-                // },
+            
                 omit: {user_id: true}
             });
             return files;
