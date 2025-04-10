@@ -45,9 +45,8 @@ const uploadController = {
                 }
             ).end(req.file.buffer)
         } catch (error) {
-            console.error('ERROR IN UPLOAD CONTROLLER: ', error)
-            res.status(500).send('ERROR SAVING FILE, SERVER ERROR: ', error)
-
+            console.error('ERROR IN UPLOAD CONTROLLER: ', error);
+            res.status(500).send('ERROR SAVING FILE, SERVER ERROR: ', error);
         }
     },
 }

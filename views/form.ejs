@@ -50,7 +50,7 @@
         <div class="flex flex-wrap justify-between gap-3 p-4">
           
         </div>
-        <div class="upload-container">
+        <div class="upload-container" id="uploadContainer">
           <div class="upload-header">
             <div class="upload-title">Upload File</div>
           </div>
@@ -64,10 +64,49 @@
               <input type="file" name="file" id="file" required />
             </div>
             <input type="hidden" name="folderId" value="<%=folderId%>" />
-            <input type="submit" class="submit-btn" value="Upload" />
+            <input type="submit" class="submit-btn" id="uploadSubmit" value="Upload" />
           </form>
+        
         </div>
+          <!--Loading-->
+          <div class="body" style="display: none;" id="loading">
+
+            <div class="scene">
+              <div class="shadow"></div>
+              <div class="jumper">
+                <div class="spinner">
+                  <div class="scaler">
+                    <div class="loader">
+                      <div class="cuboid">
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+                      <!--Loading-->
+
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  const loader = document.getElementById("uploadContainer");
+  const fileContainer = document.getElementById('file');
+  const loadingDiv = document.getElementById("loading");
+  document.getElementById("uploadSubmit").addEventListener('click',()=>{
+    if(fileContainer.files.length > 0) {
+      loader.style.display = "none";
+      loadingDiv.style.display = "block";
+    }
+  })
+</script>
