@@ -4,7 +4,6 @@ const dbClient = require('../models/dbClient');
 
 searchRouter.get('/',async(req,res)=>{
     try {
-        console.log('in the router')
         const searchValue = req.query.value;
         const folders = await dbClient.searchAllFolders(searchValue);
         const files = await dbClient.searchAllFiles(searchValue);

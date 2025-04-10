@@ -47,7 +47,7 @@
 
              <!--search section-->
             <div class="px-4 py-3">
-              <label class="flex flex-col min-w-40 h-12 w-full">
+              <label class="flex flex-col min-w-40 h-12 w-full  searchDiv">
                 <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
 
                     <!--magnifies section-->
@@ -57,7 +57,7 @@
                     data-size="24px"
                     data-weight="regular"
                   >
-                  <button style="cursor: pointer;" onclick="search()">
+                  <button style="cursor: pointer;" onclick="search()" class="magnify">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                       <path
                         d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
@@ -388,7 +388,9 @@
     //search input handler
     function search() {
         let searchEntry = document.getElementById('search-input').value;
-            console.log('search: ',searchEntry)
+        if(!searchEntry.trim()) {
+            return
+        }
             fetch(`/search?value=${encodeURIComponent(searchEntry)}`).then(res=>{
                 if(res.ok) {
                     window.location.href=`/search?value=${encodeURIComponent(searchEntry)}`;

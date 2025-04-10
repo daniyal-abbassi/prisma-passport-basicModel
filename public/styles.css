@@ -106,3 +106,18 @@ input[type="file"] {
 .share-link  {
     cursor: pointer !important;
 }
+
+.magnify:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+    fill: white;
+}
+.magnify svg:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+    fill: white;
+}
+.searchDiv:hover {
+    border: 1px solid #1980e6;
+    border-radius: 12px;
+}
