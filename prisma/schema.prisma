@@ -29,7 +29,7 @@ model User {
 model Folder {
   folder_id  Int      @id @default(autoincrement())
   name       String   @db.Text
-  share Boolean @default(false)
+  share      Boolean  @default(false)
   //relations
   parent_id  Int?
   user_id    Int?
@@ -53,8 +53,18 @@ model File {
   //relations
   folder_id Int?
   user_id   Int?
-  folder Folder? @relation(fields: [folder_id],references: [folder_id], onDelete: Cascade)
+  folder    Folder? @relation(fields: [folder_id], references: [folder_id], onDelete: Cascade)
   user      User?   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
   @@map("files")
+}
+
+//session model
+model Session {
+  id        String   @id @default(uuid())
+  sid       String   @unique
+  data      Json
+  expiresAt DateTime
+
+  @@index([expiresAt])
 }
