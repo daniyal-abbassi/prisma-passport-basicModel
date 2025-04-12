@@ -44,3 +44,7 @@ A secure cloud storage solution inspired by Google Drive, built with Node.js, Ex
 ### DevOps
 - Session storage with Prisma Session Store
 - Environment variables via dotenv
+
+### deployment
+
+- still in progress - (having hard time with prisma)
