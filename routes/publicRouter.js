@@ -6,7 +6,9 @@ publicRouter.get('/:folderId/share', async (req, res) => {
     try {
         const folderId = req.params.folderId;
         let sharedFolder = await dbClient.sharedFolder(folderId);
-        
+        const protocol = req.protocol;
+        const baseURL = `${protocol}://${req.host}`;
+       
         
         //get the current folder
         const currentFolder = await dbClient.getSharedParentFolderWithId(folderId);
@@ -16,7 +18,6 @@ publicRouter.get('/:folderId/share', async (req, res) => {
 
         //get the files inside this folder
         const files = await dbClient.showSharedFiles(folderId);
-        console.log('folderrouter.post: should set share to ture:  ',currentFolder)
         //folder paths array - contains of an object{id,name}
         let currentPath = [];
         if (currentFolder) {
@@ -38,6 +39,7 @@ publicRouter.get('/:folderId/share', async (req, res) => {
             currentFolderId: folderId,
             currentPath: currentPath,
             rootId: folderId,
+            baseURL,
         })
     } catch (error) {
         console.error('Error opening share url:', error);

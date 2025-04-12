@@ -11,7 +11,7 @@
         </div>
         <div class="flex flex-1 justify-end gap-8">
           <!--go to project link-->
-          <a href="http://localhost:3000">
+          <a href="<%=baseURL%>">
               <button
             class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#293038] text-white text-sm font-bold leading-normal tracking-[0.015em] log-out"
           >
@@ -45,36 +45,7 @@
         <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
           <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72 files-title">Shared Folder</p></div>
 
-           <!--search section
-          <div class="px-4 py-3">
-            <label class="flex flex-col min-w-40 h-12 w-full">
-              <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-
-                  magnifies section
-                <div
-                  class="text-[#9dabb8] flex border-none bg-[#293038] items-center justify-center pl-4 rounded-l-xl border-r-0"
-                  data-icon="MagnifyingGlass"
-                  data-size="24px"
-                  data-weight="regular"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
-                    ></path>
-                  </svg>
-                </div>
-
-                search files section
-                <input
-                  placeholder="Search files"
-                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#293038] focus:border-none h-full placeholder:text-[#9dabb8] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                  value=""
-                />
-              </div>
-            </label>
-          </div>
-        -->
-         
+          
 
            <!--breadcrumb section-->
           <div class="px-4 py-2">
@@ -185,15 +156,7 @@
                           <p class="text-[#9dabb8] text-sm font-normal leading-normal line-clamp-2"><%= new Date(file.date).toLocaleDateString()%></p>
                       </div>
                       <!--donwload,share and delete section-->
-                      <button onclick="shareFile('<%=file.file_id%>')" class="text-white flex size-7 items-center justify-center hover:text-indigo-500" title="Share File">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <circle cx="18" cy="5" r="3"></circle>
-                              <circle cx="6" cy="12" r="3"></circle>
-                              <circle cx="18" cy="19" r="3"></circle>
-                              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                            </svg>
-                      </button>
+                      
                       <div class="flex items-center gap-2 shrink-0">
                           <a href="<%=file.url.replace('/upload/','/upload/fl_attachment/') %>" target="_blank" class="text-white flex size-7 items-center justify-center hover:text-green-500" title="Download File">
                               <svg height="32px" version="1.1" viewBox="0 0 32 32" width="32px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#157EFB" id="icon-129-cloud-download"><path d="M15,27.25 L11.75,24 L11,24.75 L15.5,29.25 L20,24.75 L19.25,24 L16,27.25 L16,16 L15,16 L15,27.25 L15,27.25 Z M14,22 L7.00281647,22 C4.79793835,22 3,20.209139 3,18 C3,16.1046097 4.32460991,14.5117359 6.10100919,14.1021544 L6.10100919,14.1021544 C6.03467626,13.7448817 6,13.3764904 6,13 C6,9.68629134 8.68629134,7 12,7 C14.6154416,7 16.8400262,8.67345685 17.6614243,11.0080411 C18.435776,10.3778124 19.4237666,10 20.5,10 C22.8583427,10 24.7929639,11.814166 24.9844379,14.1230721 L24.9844379,14.1230721 C26.7144917,14.5630972 28,16.1320162 28,18 C28,20.2046438 26.207878,22 23.9971835,22 L17,22 L17,23 L24.0005601,23 C26.7616745,23 29,20.7558048 29,18 C29,15.9035809 27.7132907,14.1085075 25.8828633,13.3655101 L25.8828633,13.3655101 C25.3600217,10.8722494 23.1486546,9 20.5,9 C19.6371017,9 18.8206159,9.19871575 18.0938083,9.55288165 C16.8911816,7.43144875 14.6127573,6 12,6 C8.13400656,6 5,9.13400656 5,13 C5,13.1381509 5.00400207,13.275367 5.01189661,13.4115388 L5.01189661,13.4115388 C3.23965876,14.1816085 2,15.9491311 2,18 C2,20.7614237 4.23249418,23 6.99943992,23 L14,23 L14,22 L14,22 L14,22 Z" id="cloud-download"/></g></g></svg>
